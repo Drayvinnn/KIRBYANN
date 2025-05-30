@@ -15,8 +15,8 @@
       margin: 0;
     }
 
-    .left-icon {
-      position: fixed;
+    .lipbite-icon {
+      position: absolute;
       top: 20px;
       left: 20px;
       font-size: 2.5rem;
@@ -30,15 +30,15 @@
       padding: 0;
     }
 
-    .left-icon:hover {
+    .lipbite-icon:hover {
       transform: scale(1.2);
     }
 
-    .left-icon.dark {
+    .lipbite-icon.dark {
       filter: brightness(0.4);
     }
 
-    .left-icon:disabled {
+    .lipbite-icon:disabled {
       cursor: not-allowed;
       opacity: 0.6;
       pointer-events: none;
@@ -154,8 +154,9 @@
     }
 
     .center-content button {
-      padding: 0.5rem 1.25rem;
-      font-size: 1rem;
+      padding: 0.75rem 2rem;
+      font-size: 1.25rem;
+      min-width: 200px;
       border: none;
       border-radius: 8px;
       background-color: #fb1684;
@@ -215,18 +216,6 @@
 </head>
 <body>
 
-  <button class="left-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
-
-  <div id="confirmDialog" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color: rgba(0,0,0,0.7); z-index:1002; justify-content:center; align-items:center;">
-    <div style="background:white; padding:2rem; border-radius:12px; text-align:center; max-width:300px; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
-      <p style="font-size:1.2rem; margin-bottom:1.5rem; color:#333;">Are you sure you want to continue, ano jay?</p>
-      <div style="display:flex; justify-content:space-between; gap:1rem;">
-        <button id="confirmYes" style="flex:1; padding:0.5rem; background-color:#fb1684; color:white; border:none; border-radius:8px; cursor:pointer;">jay</button>
-        <button id="confirmNo" style="flex:1; padding:0.5rem; background-color:#ccc; color:black; border:none; border-radius:8px; cursor:pointer;">no wala</button>
-      </div>
-    </div>
-  </div>
-
   <div class="container">
     <div class="message-box">
       <h1>Happy Monthsary!</h1>
@@ -239,6 +228,8 @@
         <span class="flower">🌷</span>
         <span class="flower">💐</span>
       </div>
+
+      <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
     </div>
 
     <div class="photo-grid">
@@ -254,6 +245,16 @@
   <div class="modal" id="modal">
     <span class="close" id="modalClose">&times;</span>
     <img id="modalImage" src="" alt="Zoomed Image" />
+  </div>
+
+  <div id="confirmDialog" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color: rgba(0,0,0,0.7); z-index:1002; justify-content:center; align-items:center;">
+    <div style="background:white; padding:2rem; border-radius:12px; text-align:center; max-width:300px; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
+      <p style="font-size:1.2rem; margin-bottom:1.5rem; color:#333;">Are you sure you want to continue, ano jay?</p>
+      <div style="display:flex; justify-content:space-between; gap:1rem;">
+        <button id="confirmYes" style="flex:1; padding:0.5rem; background-color:#fb1684; color:white; border:none; border-radius:8px; cursor:pointer;">jay</button>
+        <button id="confirmNo" style="flex:1; padding:0.5rem; background-color:#ccc; color:black; border:none; border-radius:8px; cursor:pointer;">no wala</button>
+      </div>
+    </div>
   </div>
 
   <script>

@@ -15,39 +15,39 @@
       margin: 0;
     }
 
-    .left-icon {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      font-size: 2.5rem;
-      z-index: 1001;
-      user-select: none;
-      cursor: pointer;
-      transition: transform 0.3s ease, filter 0.3s ease;
-      background: none;
-      border: none;
-      color: inherit;
-      padding: 0;
-    }
+    .lipbite-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 2.5rem;
+  z-index: 1001;
+  user-select: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0;
+}
 
-    .left-icon:hover {
-      transform: scale(1.2);
-    }
+.lipbite-icon:hover {
+  transform: scale(1.2);
+}
 
-    .left-icon.dark {
-      filter: brightness(0.4);
-    }
+.lipbite-icon.dark {
+  filter: brightness(0.4);
+}
 
-    .left-icon:disabled {
-      cursor: not-allowed;
-      opacity: 0.6;
-      pointer-events: none;
-    }
-
+.lipbite-icon:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
     .container {
       max-width: 900px;
       width: 100%;
       text-align: center;
+      position: relative;
     }
 
     .message-box {
@@ -209,13 +209,11 @@
 </head>
 <body>
 
-  <!-- Left Icon as Button -->
-  <button class="left-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
-
   <div class="container">
     <div class="message-box">
-      
-      <p>Happy Monthsary, my love. I love you to the moon and back—and beyond</p>
+      <h1>Happy Monthsary!</h1>
+  <p>Hi, my love. I love you to the moon and back—and beyond</p>
+      <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
 
       <div class="flower-container">
         <span class="flower">🌸</span>
@@ -235,7 +233,7 @@
         </video>
 
         <div style="margin-top: 1rem; text-align: center;">
-          <button id="clickHereBtn" style="padding: 0.5rem 1rem; font-size: 1rem; border: none; border-radius: 10px; background-color: #eaeaea; color: white; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: background-color 0.3s ease;">
+          <button id="clickHereBtn" style="padding: 2rem 2rem; font-size: 2rem; border: none; border-radius: 8px; background-color: #ffffff; color: white; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: background-color 0.3s ease;">
             🎀
           </button>
         </div>

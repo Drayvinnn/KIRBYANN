@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>nter Anniversary Date</title>
+  <title>Enter Anniversary Date</title>
   <style>
     body {
       margin: 0;
@@ -40,15 +40,16 @@
       margin-bottom: 1rem;
     }
 
-    input {
-      width: 90%;
-      padding: 1rem;
-      border: 2px solid #ff66aa;
-      border-radius: 10px;
-      font-size: 1rem;
-      text-align: center;
-      color: #333;
-    }
+  input {
+  width: 90%;
+  padding: 1rem;
+  border: 2px solid #ff66aa;
+  border-radius: 10px;
+  font-size: 1rem;
+  text-align: center;
+  color: none;
+  outline: none; /* Removes the default black outline */
+}
 
     .toggle-btn {
       position: absolute;
@@ -97,21 +98,23 @@
     <div class="error-message" id="errorMsg">Oops! Try again 😢</div>
   </div>
 
-  <!-- 🔊 Audio element for error sound -->
+  <!-- Error sound -->
   <audio id="errorSound" src="d43d329a-2cc8-43cb-8965-4c013adf926e.mp3" preload="auto"></audio>
 
   <script>
-    function checkCode() {
-      const correctCode = "12052022";
-      const input = document.getElementById("codeInput");
-      const errorMsg = document.getElementById("errorMsg");
-      const errorSound = document.getElementById("errorSound");
+    const correctCode = "12052022";
+    const input = document.getElementById("codeInput");
+    const errorMsg = document.getElementById("errorMsg");
+    const errorSound = document.getElementById("errorSound");
 
-      if (input.value === "") {
+    function checkCode() {
+      const inputValue = input.value.trim();
+
+      if (inputValue === "") {
         errorMsg.textContent = "Enter Anniversary Date 😅";
         errorMsg.style.display = "block";
         playErrorSound();
-      } else if (input.value !== correctCode) {
+      } else if (inputValue !== correctCode) {
         errorMsg.textContent = "Oops! Try again 😢";
         errorMsg.style.display = "block";
         playErrorSound();
@@ -122,24 +125,24 @@
     }
 
     function togglePassword() {
-      const input = document.getElementById("codeInput");
-      const toggleIcon = document.getElementById("toggleIcon");
-
       if (input.type === "password") {
         input.type = "text";
-        toggleIcon.textContent = "🙈";
+        document.getElementById("toggleIcon").textContent = "🙈";
       } else {
         input.type = "password";
-        toggleIcon.textContent = "🙉";
+        document.getElementById("toggleIcon").textContent = "🙉";
       }
     }
 
     function playErrorSound() {
-      const errorSound = document.getElementById("errorSound");
-      errorSound.currentTime = 0;
-      errorSound.play().catch((err) => {
-        console.log("Autoplay prevented or failed:", err);
-      });
+      try {
+        errorSound.currentTime = 0;
+        errorSound.play().catch(err => {
+          console.log("Audio playback blocked or failed:", err);
+        });
+      } catch (err) {
+        console.log("Error playing sound:", err);
+      }
     }
   </script>
 

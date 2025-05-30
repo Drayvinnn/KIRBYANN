@@ -15,35 +15,6 @@
       margin: 0;
     }
 
-    .left-icon {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      font-size: 2.5rem;
-      z-index: 1001;
-      user-select: none;
-      cursor: pointer;
-      transition: transform 0.3s ease, filter 0.3s ease;
-      background: none;
-      border: none;
-      color: inherit;
-      padding: 0;
-    }
-
-    .left-icon:hover {
-      transform: scale(1.2);
-    }
-
-    .left-icon.dark {
-      filter: brightness(0.4);
-    }
-
-    .left-icon:disabled {
-      cursor: not-allowed;
-      opacity: 0.6;
-      pointer-events: none;
-    }
-
     .container {
       max-width: 900px;
       width: 100%;
@@ -68,6 +39,41 @@
       font-weight: bold;
       position: relative;
       z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      color: white;
+      flex-direction: row-reverse;
+    }
+
+    .lipbite-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 2.5rem;
+      z-index: 1001;
+      user-select: none;
+      cursor: pointer;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      background: none;
+      border: none;
+      color: inherit;
+      padding: 0;
+    }
+
+    .lipbite-icon:hover {
+      transform: scale(1.2);
+    }
+
+    .lipbite-icon.dark {
+      filter: brightness(0.4);
+    }
+
+    .lipbite-icon:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+      pointer-events: none;
     }
 
     .message-box p {
@@ -209,14 +215,10 @@
 </head>
 <body>
 
-  <!-- Left Icon as Button -->
-  <button class="left-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
-
   <div class="container">
     <div class="message-box">
       <h1>Happy Monthsary!</h1>
-      <p>My heart dances with happiness every time I think of you. Happy Monthsary to the one who makes my world bright</p>
-
+      <p>If I had nine lives like a cat, I’d fall in love with you in every single one. Happy Monthsary, my forever favorite</p>
       <div class="flower-container">
         <span class="flower">🌸</span>
         <span class="flower">🌼</span>
@@ -225,6 +227,7 @@
         <span class="flower">🌷</span>
         <span class="flower">💐</span>
       </div>
+      <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
     </div>
 
     <div class="photo-grid">
@@ -249,9 +252,19 @@
           Your browser does not support the video tag.
         </video>
 
-        <!-- Updated Button Below the Video -->
         <div style="margin-top: 1rem; text-align: center;">
-          <button onclick="window.location.href='nextpagee.html'" style="padding: 0.5rem 1rem; font-size: 1rem; border: none; border-radius: 8px; background-color: #fb1684; color: white; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: background-color 0.3s ease;">
+          <button onclick="window.location.href='nextpagee.html'" 
+            style="
+              padding: 1rem 2rem;
+              font-size: 1.25rem;
+              border: none;
+              border-radius: 10px;
+              background-color: #fb1684;
+              color: white;
+              cursor: pointer;
+              box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+              transition: background-color 0.3s ease;
+            ">
             Click Here
           </button>
         </div>
@@ -259,7 +272,6 @@
     </div>
   </div>
 
-  <!-- Modal for Zoomed Image -->
   <div class="modal" id="modal">
     <span class="close" id="modalClose">&times;</span>
     <img id="modalImage" src="" alt="Zoomed Image" />
