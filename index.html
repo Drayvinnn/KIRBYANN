@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Anniversary Unlock</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enter Anniversary Date</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
       font-family: Arial, sans-serif;
-      background: url('7adfdeab-64e1-4406-b087-80fc68514f65.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background: linear-gradient(to bottom right, #ffddee, #ffccf1);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
     }
 
-    .login-box {
-      background: rgba(255, 255, 255, 0.9); /* semi-transparent background for readability */
+    .container {
+      background-color: #fff;
       padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 40px #f564a9;
+      border-radius: 20px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
       text-align: center;
-      width: 300px;
     }
 
-    .login-box h2 {
-      font-size: 1.4rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
+    h2 {
+      color: #e60073;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
     }
 
     .input-wrapper {
@@ -35,76 +37,97 @@
       margin-bottom: 1rem;
     }
 
-    .input-wrapper input {
-      padding: 0.5rem 2rem 0.5rem 0.5rem;
-      width: 100%;
-      box-sizing: border-box;
+    input {
+      width: 90%;
+      padding: 1rem;
+      border: 2px solid #ff66aa;
+      border-radius: 10px;
+      font-size: 1rem;
       text-align: center;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      color: #333;
     }
 
     .toggle-btn {
       position: absolute;
-      right: 8px;
       top: 50%;
+      right: 10px;
       transform: translateY(-50%);
-      background: transparent;
+      background: none;
       border: none;
       cursor: pointer;
       font-size: 1.2rem;
-      padding: 0;
-      line-height: 1;
-      outline: none;
     }
 
-    button {
-      padding: 0.5rem 7.6rem;
-      background-color: #f564a9;
+    .unlock-btn {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      background-color: #ff3399;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    button:hover {
-      background-color: #d94f92;
+    .unlock-btn:hover {
+      background-color: #e60073;
+    }
+
+    .error-message {
+      margin-top: 1rem;
+      color: red;
+      font-size: 1rem;
+      display: none;
     }
   </style>
 </head>
 <body>
 
-  <div class="login-box">
-    <h2>Enter Your Anniversary Date</h2>
+  <div class="container">
+    <h2>Enter Anniversary Date</h2>
     <div class="input-wrapper">
       <input type="password" id="codeInput" placeholder="MMDDYY" />
-      <button class="toggle-btn" id="toggleBtn" onclick="togglePassword()">🙈</button>
+      <button class="toggle-btn" onclick="togglePassword()" id="toggleIcon">👁️</button>
     </div>
-    <button onclick="checkCode()">UNLOCK</button>
+    <button class="unlock-btn" onclick="checkCode()">Unlock</button>
+    <div class="error-message" id="errorMsg">Oops! Try again 😢</div>
   </div>
+
+  <!-- 🔊 Audio element for error sound -->
+  <audio id="errorSound" src="d43d329a-2cc8-43cb-8965-4c013adf926e.mp3" preload="auto"></audio>
 
   <script>
     function checkCode() {
       const correctCode = "12052022";
-      const userInput = document.getElementById("codeInput").value;
+      const input = document.getElementById("codeInput");
+      const errorMsg = document.getElementById("errorMsg");
+      const errorSound = document.getElementById("errorSound");
 
-      if (userInput === correctCode) {
-        window.location.href = "nextpage.html";
+      if (input.value === "") {
+        errorMsg.textContent = "Enter Anniversary Date 😅";
+        errorMsg.style.display = "block";
+        errorSound.play();
+      } else if (input.value !== correctCode) {
+        errorMsg.textContent = "Oops! try again 😢";
+        errorMsg.style.display = "block";
+        errorSound.play();
       } else {
-        alert("Incorrect code. Please try again.");
+        errorMsg.style.display = "none";
+        window.location.href = "nextpage.html"; // ✅ Your target page here
       }
     }
 
     function togglePassword() {
       const input = document.getElementById("codeInput");
-      const toggleBtn = document.getElementById("toggleBtn");
+      const toggleIcon = document.getElementById("toggleIcon");
 
       if (input.type === "password") {
         input.type = "text";
-        toggleBtn.textContent = "🙉";
+        toggleIcon.textContent = "🙈";
       } else {
         input.type = "password";
-        toggleBtn.textContent = "🙈";
+        toggleIcon.textContent = "🙉";
       }
     }
   </script>
