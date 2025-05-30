@@ -18,7 +18,7 @@
 
     .container {
       background-color: #fff;
-      padding: 2rem;
+      padding: 1rem;
       border-radius: 20px;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
       width: 90%;
@@ -88,14 +88,14 @@
     <h2>Enter Anniversary Date</h2>
     <div class="input-wrapper">
       <input type="password" id="codeInput" placeholder="MMDDYY" />
-      <button class="toggle-btn" onclick="togglePassword()" id="toggleIcon">👁️</button>
+      <button class="toggle-btn" onclick="togglePassword()" id="toggleIcon">🙉</button>
     </div>
     <button class="unlock-btn" onclick="checkCode()">Unlock</button>
     <div class="error-message" id="errorMsg">Oops! Try again 😢</div>
   </div>
 
   <!-- 🔊 Audio element for error sound -->
-  <audio id="errorSound" src="d43d329a-2cc8-43cb-8965-4c013adf926e.mp3" preload="auto"></audio>
+  <audio id="errorSound" src="error.mp3" preload="auto"></audio>
 
   <script>
     function checkCode() {
@@ -107,14 +107,14 @@
       if (input.value === "") {
         errorMsg.textContent = "Enter Anniversary Date 😅";
         errorMsg.style.display = "block";
-        errorSound.play();
+        playErrorSound();
       } else if (input.value !== correctCode) {
-        errorMsg.textContent = "Oops! try again 😢";
+        errorMsg.textContent = "Oops! Try again 😢";
         errorMsg.style.display = "block";
-        errorSound.play();
+        playErrorSound();
       } else {
         errorMsg.style.display = "none";
-        window.location.href = "nextpage.html"; // ✅ Your target page here
+        window.location.href = "nextpage.html";
       }
     }
 
@@ -129,6 +129,14 @@
         input.type = "password";
         toggleIcon.textContent = "🙉";
       }
+    }
+
+    function playErrorSound() {
+      const errorSound = document.getElementById("errorSound");
+      errorSound.currentTime = 0; // rewind to start
+      errorSound.play().catch((err) => {
+        console.log("Autoplay prevented or failed:", err);
+      });
     }
   </script>
 
