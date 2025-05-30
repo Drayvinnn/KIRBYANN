@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Monthsary Message with 12 Pictures</title>
+  <title>Monthsary Message with 9 Pictures</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -45,7 +45,7 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 1200px;
       width: 100%;
       text-align: center;
     }
@@ -120,7 +120,7 @@
 
     .photo-grid img {
       width: 100%;
-      max-width: 200px;
+      max-width: 280px;
       height: auto;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -135,17 +135,20 @@
       box-shadow: 0 4px 15px rgba(245, 100, 169);
     }
 
-    .video-section {
-      display: flex;
-      justify-content: center;
-      margin-top: 2rem;
+    /* Enlarge the 9th image */
+
+    
+    .photo-grid img:nth-child(9) {
+      max-width: 350px;
+      transform: scale(1.08);
+      z-index: 3;
     }
 
     .center-content {
       text-align: center;
       display: flex;
       flex-direction: column;
-      align-items: center; /* Center button and image horizontally */
+      align-items: center;
     }
 
     .center-content img {
@@ -196,20 +199,17 @@
       cursor: pointer;
     }
 
-  
-  .modal .close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 4rem;  /* increased size */
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-  transition: none;
-}
+    .modal .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 4rem;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      background: transparent;
+      padding: 0;
+    }
 
     .modal .close:hover {
       color: #f564a9;
@@ -236,12 +236,21 @@
         <span class="flower">🌷</span>
         <span class="flower">💐</span>
       </div>
-
       <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
     </div>
 
     <div class="photo-grid">
-      <img src="517dbf7d-ea2d-4aa4-8ebd-959257b48b7e.jpg" alt="Pic 1" />
+      <img src="ab44174f-aa81-4b4f-8306-083c3671714b.jpg" alt="Pic 1" />
+      <img src="394901033_301494242744734_4155546657960693222_n.jpg" alt="Pic 2" />
+      <img src="394834463_884138846398092_4729729923797315761_n.jpg" alt="Pic 3" />
+      <img src="IMG_20241003_003457_352.jpg" alt="Pic 4" />
+      <img src="-6244485391998631720_121.jpg" alt="Pic 5" />
+      <img src="a0b71c5d-ce92-4ad6-b272-daba5bf30a0f.jpg" alt="Pic 6" />
+      <img src="-6100163530096491329_121.jpg" alt="Pic 7" />
+      <img src="IMG_20240220_011647_422.jpg" alt="Pic 8" />
+      <h1>
+      <img src="517dbf7d-ea2d-4aa4-8ebd-959257b48b7e.jpg" alt="Pic 9" />
+      </h1>
     </div>
 
     <div class="center-content">
@@ -289,7 +298,6 @@
           font-size: 1.15rem;
           cursor:pointer;
           box-shadow: 0 3px 8px rgba(251, 22, 132, 0.7);
-          transition: background-color 0.3s ease;
         ">jay</button>
         <button id="confirmNo" style="
           flex:1;
@@ -300,7 +308,6 @@
           border-radius:12px;
           font-size: 1.15rem;
           cursor:pointer;
-          transition: background-color 0.3s ease;
         ">no wala</button>
       </div>
     </div>
