@@ -9,7 +9,10 @@
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, #ffddee, #ffccf1);
+      background: 
+        linear-gradient(to bottom right, rgba(255, 221, 238, 0.8), rgba(255, 204, 241, 0.8)),
+        url("7adfdeab-64e1-4406-b087-80fc68514f65.jpg") no-repeat center center fixed;
+      background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -18,7 +21,7 @@
 
     .container {
       background-color: #fff;
-      padding: 1rem;
+      padding: .7rem;
       border-radius: 20px;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
       width: 90%;
@@ -95,7 +98,7 @@
   </div>
 
   <!-- 🔊 Audio element for error sound -->
-  <audio id="errorSound" src="error.mp3" preload="auto"></audio>
+  <audio id="errorSound" src="d43d329a-2cc8-43cb-8965-4c013adf926e.mp3" preload="auto"></audio>
 
   <script>
     function checkCode() {
@@ -133,7 +136,7 @@
 
     function playErrorSound() {
       const errorSound = document.getElementById("errorSound");
-      errorSound.currentTime = 0; // rewind to start
+      errorSound.currentTime = 0;
       errorSound.play().catch((err) => {
         console.log("Autoplay prevented or failed:", err);
       });
