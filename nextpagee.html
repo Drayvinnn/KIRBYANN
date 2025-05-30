@@ -143,6 +143,9 @@
 
     .center-content {
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center button and image horizontally */
     }
 
     .center-content img {
@@ -247,12 +250,53 @@
     <img id="modalImage" src="" alt="Zoomed Image" />
   </div>
 
-  <div id="confirmDialog" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color: rgba(0,0,0,0.7); z-index:1002; justify-content:center; align-items:center;">
-    <div style="background:white; padding:2rem; border-radius:12px; text-align:center; max-width:300px; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
-      <p style="font-size:1.2rem; margin-bottom:1.5rem; color:#333;">Are you sure you want to continue, ano jay?</p>
-      <div style="display:flex; justify-content:space-between; gap:1rem;">
-        <button id="confirmYes" style="flex:1; padding:0.5rem; background-color:#fb1684; color:white; border:none; border-radius:8px; cursor:pointer;">jay</button>
-        <button id="confirmNo" style="flex:1; padding:0.5rem; background-color:#ccc; color:black; border:none; border-radius:8px; cursor:pointer;">no wala</button>
+  <div id="confirmDialog" style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-color: rgba(0,0,0,0.7);
+    z-index:1002;
+    justify-content:center;
+    align-items:center;
+  ">
+    <div style="
+      background:white;
+      padding: 3rem 2.5rem;
+      border-radius: 16px;
+      text-align:center;
+      max-width: 360px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+      font-size: 1.25rem;
+      color:#333;
+    ">
+      <p style="margin-bottom:2rem;">Are you sure you want to continue, ano jay?</p>
+      <div style="display:flex; justify-content:space-between; gap:1.5rem;">
+        <button id="confirmYes" style="
+          flex:1;
+          padding: 0.75rem 0;
+          background-color:#fb1684;
+          color:white;
+          border:none;
+          border-radius:12px;
+          font-size: 1.15rem;
+          cursor:pointer;
+          box-shadow: 0 3px 8px rgba(251, 22, 132, 0.7);
+          transition: background-color 0.3s ease;
+        ">jay</button>
+        <button id="confirmNo" style="
+          flex:1;
+          padding: 0.75rem 0;
+          background-color:#ccc;
+          color:black;
+          border:none;
+          border-radius:12px;
+          font-size: 1.15rem;
+          cursor:pointer;
+          transition: background-color 0.3s ease;
+        ">no wala</button>
       </div>
     </div>
   </div>
