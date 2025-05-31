@@ -149,6 +149,23 @@
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
 
+    .click-button {
+      font-size: 1.5rem;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 10px;
+      background-color: #fb1684;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .click-button:hover {
+      background-color: #e01375;
+      transform: scale(1.05);
+    }
+
     .modal {
       display: none;
       position: fixed;
@@ -210,10 +227,16 @@
 </head>
 <body>
 
+  <!-- Background music -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="tiktokio.com_r0KOTKwFW7ANKnFcMqQ6.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
   <div class="container">
     <div class="message-box">
       <h1>Happy Monthsary!</h1>
-      <p>Hi, my love. I love you to the moon and back—and beyond</p>
+
       <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
 
       <div class="flower-container">
@@ -228,24 +251,19 @@
 
     <div class="video-section">
       <div>
-        <video controls id="myVideo" playsinline>
-          <source src="snaptik_7218999084768627995.mp4" type="video/mp4" />
+        <video controls>
+          <source src="snaptik_7400391034791922987.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
 
         <div style="margin-top: 1rem; text-align: center;">
-          <button id="clickHereBtn" style="padding: 2rem 2rem; font-size: 2rem; border: none; border-radius: 8px; background-color: #ffffff; color: white; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: background-color 0.3s ease;">
-            🎀
-          </button>
+          <button id="clickHereBtn" class="click-button">Click Here</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ✅ Updated Audio Element -->
-  <audio id="bgMusic" src="a05451e7-1b21-4821-be26-5245695e0219.mp3" autoplay muted loop></audio>
-
-  <!-- Modal -->
+  <!-- Modal for Zoomed Image -->
   <div class="modal" id="modal">
     <span class="close" id="modalClose">&times;</span>
     <img id="modalImage" src="" alt="Zoomed Image" />
@@ -256,11 +274,19 @@
     const modalImage = document.getElementById('modalImage');
     const modalClose = document.getElementById('modalClose');
     const lipbiteBtn = document.getElementById('lipbiteBtn');
-    const video = document.getElementById('myVideo');
-    const bgMusic = document.getElementById('bgMusic');
-
     let lipbiteDisabled = false;
 
+    const bgMusic = document.getElementById('bgMusic');
+    const video = document.querySelector('.video-section video');
+
+    // To comply with autoplay policies, try to play music after first user interaction if needed
+    document.addEventListener('click', () => {
+      if (bgMusic.paused) {
+        bgMusic.play().catch(() => {});
+      }
+    }, { once: true });
+
+    // Photo grid images click for modal (no images currently in your HTML, add if you want)
     document.querySelectorAll('.photo-grid img').forEach(img => {
       img.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -289,47 +315,36 @@
 
     lipbiteBtn.addEventListener('click', () => {
       if (!lipbiteDisabled) {
-        window.location.href = 'nextpage1.html';
+        window.location.href = 'nextpageee.html';
       }
     });
 
     const clickHereBtn = document.getElementById('clickHereBtn');
     clickHereBtn.addEventListener('click', () => {
-      window.location.href = 'index.html';
+      window.location.href = 'nextpageeee.html';
     });
 
+    // Pause background music when video plays and request fullscreen
     video.addEventListener('play', () => {
+      bgMusic.pause();
+
       if (video.requestFullscreen) {
         video.requestFullscreen();
-      } else if (video.webkitRequestFullscreen) {
+      } else if (video.webkitRequestFullscreen) { /* Safari */
         video.webkitRequestFullscreen();
-      } else if (video.msRequestFullscreen) {
+      } else if (video.msRequestFullscreen) { /* IE11 */
         video.msRequestFullscreen();
       }
-
-      bgMusic.pause();
     });
 
+    // Resume background music when video pauses or ends
     video.addEventListener('pause', () => {
-      bgMusic.play();
+      bgMusic.play().catch(() => {});
     });
 
     video.addEventListener('ended', () => {
-      bgMusic.play();
+      bgMusic.play().catch(() => {});
     });
-
-    // 🔊 Unmute on first interaction
-    function startMusicOnUserInteraction() {
-      if (bgMusic.muted) {
-        bgMusic.muted = false;
-        bgMusic.play();
-      }
-      window.removeEventListener('click', startMusicOnUserInteraction);
-      window.removeEventListener('touchstart', startMusicOnUserInteraction);
-    }
-
-    window.addEventListener('click', startMusicOnUserInteraction);
-    window.addEventListener('touchstart', startMusicOnUserInteraction);
   </script>
 </body>
 </html>

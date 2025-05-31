@@ -71,14 +71,6 @@
       z-index: 2;
     }
 
-    .message-box p {
-      margin-top: 0;
-      font-size: 1.25rem;
-      line-height: 1.4;
-      position: relative;
-      z-index: 2;
-    }
-
     .flower-container {
       position: absolute;
       bottom: 20px;
@@ -113,40 +105,31 @@
       100% { transform: translateY(0) rotate(-20deg); opacity: 0.7; }
     }
 
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
+    /* Updated photo-row styles to increase image size */
+    .photo-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
       margin-bottom: 2rem;
+      max-width: 480px;  /* limit width to video max width */
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .photo-grid img {
-      width: 100%;
+    .photo-row img {
+      width: 48%;
       height: auto;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
       object-fit: cover;
-      aspect-ratio: 1 / 1;
       cursor: pointer;
       transition: transform 0.3s ease;
     }
 
-    .photo-grid img:hover {
+    .photo-row img:hover {
       transform: scale(1.05);
       box-shadow: 0 4px 15px rgba(245, 100, 169);
-    }
-
-    .video-section {
-      display: flex;
-      justify-content: center;
-      margin-top: 2rem;
-    }
-
-    .video-section video {
-      width: 100%;
-      max-width: 480px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
 
     .click-button {
@@ -159,6 +142,9 @@
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
       transition: background-color 0.3s ease, transform 0.2s ease;
+      margin: 0 auto;
+      display: block;
+      max-width: 480px;
     }
 
     .click-button:hover {
@@ -199,28 +185,19 @@
       font-weight: bold;
       background: transparent;
       padding: 0;
-      border-radius: 0;
-      transition: none;
     }
 
     .modal .close:hover {
       color: #f564a9;
-      background: transparent;
     }
 
-    @media (max-width: 900px) {
-      .photo-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .photo-grid {
-        grid-template-columns: repeat(2, 1fr);
+    @media (max-width: 768px) {
+      .photo-row {
+        flex-direction: column;
       }
 
-      .video-section video {
-        max-width: 100%;
+      .photo-row img {
+        width: 100%;
       }
     }
   </style>
@@ -229,16 +206,14 @@
 
   <!-- Background music -->
   <audio id="bgMusic" autoplay loop>
-    <source src="tiktokio.com_r0KOTKwFW7ANKnFcMqQ6.mp3" type="audio/mpeg" />
+    <source src="4d10f960-2ecb-4198-96c3-384f8e62aabf (audio-extractor.net).mp3" type="audio/mpeg" />
     Your browser does not support the audio element.
   </audio>
 
   <div class="container">
     <div class="message-box">
       <h1>Happy Monthsary!</h1>
-
       <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
-
       <div class="flower-container">
         <span class="flower">🌸</span>
         <span class="flower">🌼</span>
@@ -249,17 +224,16 @@
       </div>
     </div>
 
-    <div class="video-section">
-      <div>
-        <video controls>
-          <source src="snaptik_7400391034791922987.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+    <!-- 📷 Photo Row with image left and right -->
+    <div class="photo-row">
+      <img src="268a6f85-4c59-43ed-9a8c-b8919ed7bffc.jpg" alt="1" />
+      <img src="ce7ce69a-f727-4e2f-b3c6-4a7e3ccfc939.jpg" alt="2" />
+    </div>
 
-        <div style="margin-top: 1rem; text-align: center;">
-          <button id="clickHereBtn" class="click-button">Click Here</button>
-        </div>
-      </div>
+    <!-- Removed video section -->
+
+    <div style="margin-top: 1rem; text-align: center;">
+      <button id="clickHereBtn" class="click-button">Click Here</button>
     </div>
   </div>
 
@@ -277,17 +251,14 @@
     let lipbiteDisabled = false;
 
     const bgMusic = document.getElementById('bgMusic');
-    const video = document.querySelector('.video-section video');
 
-    // To comply with autoplay policies, try to play music after first user interaction if needed
     document.addEventListener('click', () => {
       if (bgMusic.paused) {
         bgMusic.play().catch(() => {});
       }
     }, { once: true });
 
-    // Photo grid images click for modal (no images currently in your HTML, add if you want)
-    document.querySelectorAll('.photo-grid img').forEach(img => {
+    document.querySelectorAll('.photo-row img').forEach(img => {
       img.addEventListener('click', (event) => {
         event.stopPropagation();
         modal.style.display = 'flex';
@@ -321,29 +292,7 @@
 
     const clickHereBtn = document.getElementById('clickHereBtn');
     clickHereBtn.addEventListener('click', () => {
-      window.location.href = 'nextpageeee.html';
-    });
-
-    // Pause background music when video plays and request fullscreen
-    video.addEventListener('play', () => {
-      bgMusic.pause();
-
-      if (video.requestFullscreen) {
-        video.requestFullscreen();
-      } else if (video.webkitRequestFullscreen) { /* Safari */
-        video.webkitRequestFullscreen();
-      } else if (video.msRequestFullscreen) { /* IE11 */
-        video.msRequestFullscreen();
-      }
-    });
-
-    // Resume background music when video pauses or ends
-    video.addEventListener('pause', () => {
-      bgMusic.play().catch(() => {});
-    });
-
-    video.addEventListener('ended', () => {
-      bgMusic.play().catch(() => {});
+      window.location.href = 'nextpage1.html';
     });
   </script>
 </body>
