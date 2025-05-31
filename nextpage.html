@@ -149,7 +149,7 @@
 
     .video-section video {
       width: 100%;
-      max-width: 720px;
+      max-width: 480px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
@@ -215,6 +215,12 @@
 </head>
 <body>
 
+  <!-- Background Music -->
+  <audio id="bgMusic" loop>
+    <source src="Download (audio-extractor.net).mp3" type="audio/mp3" />
+    Your browser does not support the audio element.
+  </audio>
+
   <div class="container">
     <div class="message-box">
       <h1>Happy Monthsary!</h1>
@@ -231,7 +237,7 @@
     </div>
 
     <div class="photo-grid">
-      <!-- Your 12 photos here -->
+      <!-- Replace these with your actual image paths -->
       <img src="3f92e7ea-43c1-43b8-9e9f-92eeb801c8e2.jpg" alt="Pic 1" />
       <img src="bc9c32d5-1d3e-4aeb-b01a-6c402a443771.jpg" alt="Pic 2" />
       <img src="52589b7c-0418-404c-a6ba-79f065c9fc7d.jpg" alt="Pic 3" />
@@ -248,7 +254,7 @@
 
     <div class="video-section">
       <div>
-        <video controls id="videoPlayer">
+        <video controls>
           <source src="0531d0ae-8a84-4025-b5fd-37a60bbabd7e.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -278,22 +284,17 @@
     <img id="modalImage" src="" alt="Zoomed Image" />
   </div>
 
-  <!-- Background music -->
-  <audio id="bgMusic" loop muted>
-    <source src="tiktokio.com_H5cpeo9K98HvXaAiLWbb.mp3" type="audio/mpeg" />
-    Your browser does not support the audio element.
-  </audio>
-
   <script>
     const modal = document.getElementById('modal');
     const modalImage = document.getElementById('modalImage');
     const modalClose = document.getElementById('modalClose');
     const lipbiteBtn = document.getElementById('lipbiteBtn');
     const bgMusic = document.getElementById('bgMusic');
-    const video = document.getElementById('videoPlayer');
+    const video = document.querySelector('.video-section video');
 
     let lipbiteDisabled = false;
 
+    // Image modal
     document.querySelectorAll('.photo-grid img').forEach(img => {
       img.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -326,27 +327,26 @@
       }
     });
 
-    // Video and music control
-    video.addEventListener('play', () => {
-      bgMusic.pause();
-    });
+    // Background music autoplay after user interaction
+    document.addEventListener('DOMContentLoaded', () => {
+      const enableAudio = () => {
+        bgMusic.play().catch(() => {});
+        document.removeEventListener('click', enableAudio);
+      };
+      document.addEventListener('click', enableAudio);
 
-    video.addEventListener('pause', () => {
-      bgMusic.play().catch(() => {});
-    });
+      video.addEventListener('play', () => {
+        if (!bgMusic.paused) {
+          bgMusic.pause();
+        }
+      });
 
-    video.addEventListener('ended', () => {
-      bgMusic.play().catch(() => {});
-    });
+      video.addEventListener('pause', () => {
+        bgMusic.play().catch(() => {});
+      });
 
-    // Autoplay background music muted initially
-    window.addEventListener('load', () => {
-      bgMusic.play().catch(() => {
-        // Fallback: play on first user interaction
-        document.body.addEventListener('click', () => {
-          bgMusic.muted = false;  // Unmute on user interaction
-          bgMusic.play().catch(() => {});
-        }, { once: true });
+      video.addEventListener('ended', () => {
+        bgMusic.play().catch(() => {});
       });
     });
   </script>
