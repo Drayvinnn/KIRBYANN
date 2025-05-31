@@ -240,6 +240,7 @@
     </div>
 
     <div class="photo-grid">
+      <!-- Image thumbnails -->
       <img src="3f92e7ea-43c1-43b8-9e9f-92eeb801c8e2.jpg" alt="Pic 1" />
       <img src="bc9c32d5-1d3e-4aeb-b01a-6c402a443771.jpg" alt="Pic 2" />
       <img src="52589b7c-0418-404c-a6ba-79f065c9fc7d.jpg" alt="Pic 3" />
@@ -328,9 +329,17 @@
       }
     });
 
-    // Background music control based on video
     video.addEventListener('play', () => {
       bgMusic.pause();
+
+      // Request fullscreen on video play
+      if (video.requestFullscreen) {
+        video.requestFullscreen().catch(() => {});
+      } else if (video.webkitRequestFullscreen) {
+        video.webkitRequestFullscreen();
+      } else if (video.msRequestFullscreen) {
+        video.msRequestFullscreen();
+      }
     });
 
     video.addEventListener('pause', () => {
@@ -341,7 +350,6 @@
       bgMusic.play().catch(() => {});
     });
 
-    // Force play background music on first interaction (some browsers block autoplay)
     document.addEventListener('click', () => {
       if (bgMusic.paused) {
         bgMusic.play().catch(() => {});

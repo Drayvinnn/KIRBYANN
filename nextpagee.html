@@ -377,10 +377,21 @@
       confirmDialog.style.display = 'none';
     });
 
-    // Pause music when video plays
+    // Pause music when video plays and request fullscreen
     video.addEventListener('play', () => {
       if (!bgMusic.paused) {
         bgMusic.pause();
+      }
+
+      // Automatically request fullscreen when video starts
+      if (video.requestFullscreen) {
+        video.requestFullscreen().catch(err => {
+          console.warn("Fullscreen request failed:", err);
+        });
+      } else if (video.webkitRequestFullscreen) {
+        video.webkitRequestFullscreen();
+      } else if (video.msRequestFullscreen) {
+        video.msRequestFullscreen();
       }
     });
 

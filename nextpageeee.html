@@ -228,7 +228,7 @@
 
     <div class="video-section">
       <div>
-        <video controls id="myVideo">
+        <video controls id="myVideo" playsinline>
           <source src="snaptik_7218999084768627995.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -301,8 +301,17 @@
       window.location.href = 'index.html';
     });
 
-    // Background music control based on video playback
+    // Background music control based on video playback + fullscreen on play
     video.addEventListener('play', () => {
+      // Request fullscreen when video plays
+      if (video.requestFullscreen) {
+        video.requestFullscreen();
+      } else if (video.webkitRequestFullscreen) { /* Safari */
+        video.webkitRequestFullscreen();
+      } else if (video.msRequestFullscreen) { /* IE11 */
+        video.msRequestFullscreen();
+      }
+
       bgMusic.pause();
     });
 

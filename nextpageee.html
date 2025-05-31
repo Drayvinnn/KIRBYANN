@@ -324,9 +324,17 @@
       window.location.href = 'nextpageeee.html';
     });
 
-    // Pause background music when video plays
+    // Pause background music when video plays and request fullscreen
     video.addEventListener('play', () => {
       bgMusic.pause();
+
+      if (video.requestFullscreen) {
+        video.requestFullscreen();
+      } else if (video.webkitRequestFullscreen) { /* Safari */
+        video.webkitRequestFullscreen();
+      } else if (video.msRequestFullscreen) { /* IE11 */
+        video.msRequestFullscreen();
+      }
     });
 
     // Resume background music when video pauses or ends
