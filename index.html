@@ -109,7 +109,6 @@
         id="codeInput" 
         placeholder="MMDDYY" 
         oninput="handleTyping()" 
-        onblur="stopMusic()"
       />
       <button class="toggle-btn" onclick="togglePassword()" id="toggleIcon">🙉</button>
     </div>
@@ -117,38 +116,30 @@
     <div class="error-message" id="errorMsg">Oops! Try again 😢</div>
   </div>
 
-  <!-- One Music Track for Typing and Error -->
-  <audio id="actionSound" src="ssstik.io_1747321185600.mp3" preload="auto" loop></audio>
+  <audio id="actionSound" src="ssstik.io_1747321185600.mp3" preload="auto"></audio>
 
   <script>
     const correctCode = "12052022";
     const input = document.getElementById("codeInput");
     const errorMsg = document.getElementById("errorMsg");
     const actionSound = document.getElementById("actionSound");
+    let hasPlayed = false;
 
-    function playMusicFromStart() {
-      try {
-        actionSound.currentTime = 0;
-        actionSound.play().catch(err => console.log("Music play error:", err));
-      } catch (err) {
-        console.log("Playback error:", err);
-      }
-    }
-
-    function stopMusic() {
-      if (!actionSound.paused) {
-        actionSound.pause();
-        actionSound.currentTime = 0;
+    function playSound() {
+      if (!hasPlayed) {
+        try {
+          actionSound.currentTime = 0;
+          actionSound.play().catch(err => console.log("Music play error:", err));
+          hasPlayed = true;
+        } catch (err) {
+          console.log("Playback error:", err);
+        }
       }
     }
 
     function handleTyping() {
       if (input.value.trim() !== "") {
-        if (actionSound.paused) {  // Play only if not playing already
-          playMusicFromStart();
-        }
-      } else {
-        stopMusic();
+        playSound();
       }
     }
 
@@ -158,14 +149,15 @@
       if (inputValue === "") {
         errorMsg.textContent = "Enter Anniversary Date 😅";
         errorMsg.style.display = "block";
-        playMusicFromStart();
+        playSound(); // Play music if field is empty
       } else if (inputValue !== correctCode) {
         errorMsg.textContent = "Oops! Try again 😢";
         errorMsg.style.display = "block";
-        playMusicFromStart();
       } else {
         errorMsg.style.display = "none";
-        stopMusic();
+        actionSound.pause();
+        actionSound.currentTime = 0;
+        hasPlayed = false;
         window.location.href = "nextpage.html";
       }
     }
@@ -179,6 +171,10 @@
         document.getElementById("toggleIcon").textContent = "🙉";
       }
     }
+
+    actionSound.addEventListener("ended", () => {
+      hasPlayed = false;
+    });
   </script>
 
 </body>
