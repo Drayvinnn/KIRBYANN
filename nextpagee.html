@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <title>Monthsary Message with 9 Pictures</title>
   <style>
-    /* (Your existing CSS is unchanged) */
-    body {
+     body {
       font-family: Arial, sans-serif;
       background: #f8e1e7;
       display: flex;
@@ -14,6 +13,38 @@
       padding: 2rem;
       min-height: 100vh;
       margin: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .message-box {
+      position: relative;
+      background: #fb1684;
+      color: white;
+      padding: 2rem 3rem 4rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(245, 100, 169);
+      margin-bottom: 2rem;
+      overflow: visible;
+      text-align: center;
+    }
+
+    .message-box h1 {
+      margin: 0 0 1rem 0;
+      font-size: 2.5rem;
+      font-weight: bold;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      color: white;
+      flex-direction: row-reverse;
     }
 
     .lipbite-icon {
@@ -45,32 +76,6 @@
       pointer-events: none;
     }
 
-    .container {
-      max-width: 1200px;
-      width: 100%;
-      text-align: center;
-    }
-
-    .message-box {
-      position: relative;
-      background: #fb1684;
-      color: white;
-      padding: 2rem 3rem 4rem;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(245, 100, 169);
-      margin-bottom: 2rem;
-      overflow: visible;
-      text-align: center;
-    }
-
-    .message-box h1 {
-      margin: 0 0 1rem 0;
-      font-size: 2.5rem;
-      font-weight: bold;
-      position: relative;
-      z-index: 2;
-    }
-
     .message-box p {
       margin-top: 0;
       font-size: 1.25rem;
@@ -93,9 +98,11 @@
     }
 
     .flower {
+      position: relative;
       font-size: 1.8rem;
       opacity: 0.8;
       animation: float 6s infinite ease-in-out;
+      pointer-events: none;
     }
 
     .flower:nth-child(1) { animation-delay: 0s; }
@@ -290,6 +297,7 @@
   let lipbiteDisabled = false;
   let videoPlaying = false;
 
+  // When clicking images: open modal, mute video, play bg music
   document.querySelectorAll('.photo-grid img').forEach(img => {
     img.addEventListener('click', (event) => {
       event.stopPropagation();
@@ -300,9 +308,12 @@
       lipbiteBtn.disabled = true;
       lipbiteDisabled = true;
 
-      // Pause background music when modal is open
-      if (!bgMusic.paused) {
-        bgMusic.pause();
+      // Mute the video when modal opens
+      video.muted = true;
+
+      // Play background music if paused
+      if (bgMusic.paused) {
+        bgMusic.play().catch(() => {});
       }
     });
   });
@@ -312,6 +323,9 @@
     lipbiteBtn.classList.remove('dark');
     lipbiteBtn.disabled = false;
     lipbiteDisabled = false;
+
+    // Unmute video when modal closes
+    video.muted = false;
 
     // Resume music only if video is NOT playing
     if (!videoPlaying && bgMusic.paused) {
@@ -332,15 +346,20 @@
     }
   });
 
+  // When clicking "Click Here" button: show confirm, pause bg music, pause video if playing
   clickHereBtn.addEventListener('click', (e) => {
     e.preventDefault();
     confirmDialog.style.display = 'flex';
-    if (!video.paused && video.currentTime < video.duration) {
+
+    // Pause background music
+    if (!bgMusic.paused) {
+      bgMusic.pause();
+    }
+
+    // Pause video if playing and mark paused by clickHereBtn
+    if (!video.paused) {
       video.pause();
       video.setAttribute('data-paused-by-clickhere', 'true');
-    }
-    if (bgMusic.paused) {
-      bgMusic.play().catch(() => {});
     }
   });
 
@@ -350,9 +369,13 @@
 
   confirmNo.addEventListener('click', () => {
     confirmDialog.style.display = 'none';
+
+    // Resume background music
     if (bgMusic.paused) {
       bgMusic.play().catch(() => {});
     }
+
+    // Resume video only if it was paused by clickHereBtn
     if (
       video.getAttribute('data-paused-by-clickhere') === 'true' &&
       video.paused
@@ -362,39 +385,27 @@
     }
   });
 
-  // Video play/pause logic to pause/resume background music and manage fullscreen
+  // Track video play/pause state
   video.addEventListener('play', () => {
     videoPlaying = true;
+
+    // Pause background music when video plays
     if (!bgMusic.paused) {
       bgMusic.pause();
-    }
-    if (video.requestFullscreen) {
-      video.requestFullscreen().catch(err => {
-        console.warn("Fullscreen request failed:", err);
-      });
     }
   });
 
   video.addEventListener('pause', () => {
     videoPlaying = false;
-    if (video.currentTime < video.duration && bgMusic.paused) {
-      bgMusic.play().catch(() => {});
+
+    // Resume background music when video pauses (if modal not open)
+    if (!modal.style.display || modal.style.display === 'none') {
+      if (bgMusic.paused) {
+        bgMusic.play().catch(() => {});
+      }
     }
   });
-
-  video.addEventListener('ended', () => {
-    videoPlaying = false;
-    if (bgMusic.paused) {
-      bgMusic.play().catch(() => {});
-    }
-  });
-
-  // Initial user click to start background music if paused and video not playing
-  document.body.addEventListener('click', () => {
-    if (bgMusic.paused && !videoPlaying) {
-      bgMusic.play().catch(() => {});
-    }
-  }, { once: true });
 </script>
+
 </body>
 </html>

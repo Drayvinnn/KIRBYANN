@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Monthsary Message with 12 Pictures</title>
+  <title>Monthsary Message</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -52,14 +52,13 @@
     }
 
     .message-box {
-      position: relative;
       background: #fb1684;
       color: white;
       padding: 2rem 3rem 4rem;
       border-radius: 15px;
       box-shadow: 0 0 20px rgba(245, 100, 169);
       margin-bottom: 2rem;
-      overflow: visible;
+      position: relative;
       text-align: center;
     }
 
@@ -67,16 +66,11 @@
       margin: 0 0 1rem 0;
       font-size: 2.5rem;
       font-weight: bold;
-      position: relative;
-      z-index: 2;
     }
 
     .message-box p {
-      margin-top: 0;
       font-size: 1.25rem;
       line-height: 1.4;
-      position: relative;
-      z-index: 2;
     }
 
     .flower-container {
@@ -93,11 +87,9 @@
     }
 
     .flower {
-      position: relative;
       font-size: 1.8rem;
       opacity: 0.8;
       animation: float 6s infinite ease-in-out;
-      pointer-events: none;
     }
 
     .flower:nth-child(1) { animation-delay: 0s; }
@@ -122,7 +114,6 @@
 
     .photo-grid img {
       width: 100%;
-      height: auto;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
       object-fit: cover;
@@ -167,9 +158,6 @@
       max-height: 95vh;
       border-radius: 10px;
       box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-      transform: scale(1.05);
-      transition: transform 0.3s ease;
-      cursor: pointer;
     }
 
     .modal .close {
@@ -179,16 +167,6 @@
       font-size: 4rem;
       color: white;
       cursor: pointer;
-      font-weight: bold;
-      background: transparent;
-      padding: 0;
-      border-radius: 0;
-      transition: none;
-    }
-
-    .modal .close:hover {
-      color: #f564a9;
-      background: transparent;
     }
 
     @media (max-width: 900px) {
@@ -226,15 +204,18 @@
       </div>
     </div>
 
+    <div class="photo-grid">
+      <!-- Add 12 images here -->
+    </div>
+
     <div class="video-section">
       <div>
         <video controls id="myVideo" playsinline>
           <source src="snaptik_7218999084768627995.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-
         <div style="margin-top: 1rem; text-align: center;">
-          <button id="clickHereBtn" style="padding: 2rem 2rem; font-size: 2rem; border: none; border-radius: 8px; background-color: #ffffff; color: white; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: background-color 0.3s ease;">
+          <button id="clickHereBtn" style="padding: 2rem; font-size: 2rem; border-radius: 8px; background-color: #fff; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); border: none; outline: none;">
             🎀
           </button>
         </div>
@@ -242,10 +223,8 @@
     </div>
   </div>
 
-  <!-- ✅ Updated Audio Element -->
   <audio id="bgMusic" src="a05451e7-1b21-4821-be26-5245695e0219.mp3" autoplay muted loop></audio>
 
-  <!-- Modal -->
   <div class="modal" id="modal">
     <span class="close" id="modalClose">&times;</span>
     <img id="modalImage" src="" alt="Zoomed Image" />
@@ -258,32 +237,36 @@
     const lipbiteBtn = document.getElementById('lipbiteBtn');
     const video = document.getElementById('myVideo');
     const bgMusic = document.getElementById('bgMusic');
+    const clickHereBtn = document.getElementById('clickHereBtn');
 
     let lipbiteDisabled = false;
+    let videoIsPlaying = false;
+    let musicActivatedOnce = false;
 
     document.querySelectorAll('.photo-grid img').forEach(img => {
       img.addEventListener('click', (event) => {
         event.stopPropagation();
         modal.style.display = 'flex';
         modalImage.src = img.src;
-        modalImage.alt = img.alt;
         lipbiteBtn.classList.add('dark');
         lipbiteBtn.disabled = true;
         lipbiteDisabled = true;
       });
     });
 
-    const closeModal = () => {
+    modalClose.addEventListener('click', () => {
       modal.style.display = 'none';
       lipbiteBtn.classList.remove('dark');
       lipbiteBtn.disabled = false;
       lipbiteDisabled = false;
-    };
+    });
 
-    modalClose.addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => {
       if (e.target === modal || e.target === modalImage) {
-        closeModal();
+        modal.style.display = 'none';
+        lipbiteBtn.classList.remove('dark');
+        lipbiteBtn.disabled = false;
+        lipbiteDisabled = false;
       }
     });
 
@@ -293,12 +276,14 @@
       }
     });
 
-    const clickHereBtn = document.getElementById('clickHereBtn');
     clickHereBtn.addEventListener('click', () => {
       window.location.href = 'index.html';
     });
 
+    // Handle background music control
     video.addEventListener('play', () => {
+      videoIsPlaying = true;
+      bgMusic.pause();
       if (video.requestFullscreen) {
         video.requestFullscreen();
       } else if (video.webkitRequestFullscreen) {
@@ -306,23 +291,27 @@
       } else if (video.msRequestFullscreen) {
         video.msRequestFullscreen();
       }
-
-      bgMusic.pause();
     });
 
     video.addEventListener('pause', () => {
-      bgMusic.play();
+      if (musicActivatedOnce) {
+        bgMusic.play();
+        videoIsPlaying = false;
+      }
     });
 
     video.addEventListener('ended', () => {
-      bgMusic.play();
+      if (musicActivatedOnce) {
+        bgMusic.play();
+        videoIsPlaying = false;
+      }
     });
 
-    // 🔊 Unmute on first interaction
     function startMusicOnUserInteraction() {
-      if (bgMusic.muted) {
+      if (!musicActivatedOnce && !videoIsPlaying) {
         bgMusic.muted = false;
         bgMusic.play();
+        musicActivatedOnce = true;
       }
       window.removeEventListener('click', startMusicOnUserInteraction);
       window.removeEventListener('touchstart', startMusicOnUserInteraction);
