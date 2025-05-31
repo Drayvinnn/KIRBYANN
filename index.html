@@ -109,7 +109,7 @@
         id="codeInput" 
         placeholder="MMDDYY" 
         oninput="handleTyping()" 
-        onblur="stopTypingMusic()"
+        onblur="stopMusic()"
       />
       <button class="toggle-btn" onclick="togglePassword()" id="toggleIcon">🙉</button>
     </div>
@@ -117,31 +117,53 @@
     <div class="error-message" id="errorMsg">Oops! Try again 😢</div>
   </div>
 
-  <!-- Audio Elements -->
-  <audio id="typingMusic" src="ssstik.io_1747321185600.mp3" preload="auto" loop></audio>
-  <audio id="errorSound" src="ssstik.io_1747321185600.mp3" preload="auto"></audio>
+  <!-- One Music Track for Typing and Error -->
+  <audio id="actionSound" src="ssstik.io_1747321185600.mp3" preload="auto" loop></audio>
 
   <script>
     const correctCode = "12052022";
     const input = document.getElementById("codeInput");
     const errorMsg = document.getElementById("errorMsg");
-    const typingMusic = document.getElementById("typingMusic");
-    const errorSound = document.getElementById("errorSound");
+    const actionSound = document.getElementById("actionSound");
+
+    function playMusicFromStart() {
+      try {
+        actionSound.currentTime = 0;
+        actionSound.play().catch(err => console.log("Music play error:", err));
+      } catch (err) {
+        console.log("Playback error:", err);
+      }
+    }
+
+    function stopMusic() {
+      if (!actionSound.paused) {
+        actionSound.pause();
+        actionSound.currentTime = 0;
+      }
+    }
+
+    function handleTyping() {
+      if (input.value.trim() !== "") {
+        playMusicFromStart();
+      } else {
+        stopMusic();
+      }
+    }
 
     function checkCode() {
       const inputValue = input.value.trim();
-      stopTypingMusic();
 
       if (inputValue === "") {
         errorMsg.textContent = "Enter Anniversary Date 😅";
         errorMsg.style.display = "block";
-        playErrorSound();
+        playMusicFromStart();
       } else if (inputValue !== correctCode) {
         errorMsg.textContent = "Oops! Try again 😢";
         errorMsg.style.display = "block";
-        playErrorSound();
+        playMusicFromStart();
       } else {
         errorMsg.style.display = "none";
+        stopMusic();
         window.location.href = "nextpage.html";
       }
     }
@@ -153,33 +175,6 @@
       } else {
         input.type = "password";
         document.getElementById("toggleIcon").textContent = "🙉";
-      }
-    }
-
-    function playErrorSound() {
-      try {
-        errorSound.currentTime = 0;
-        errorSound.play().catch(err => console.log("Error playing error sound:", err));
-      } catch (err) {
-        console.log("Playback error:", err);
-      }
-    }
-
-    function handleTyping() {
-      if (input.value.trim() !== "") {
-        if (typingMusic.paused) {
-          typingMusic.currentTime = 0;
-          typingMusic.play().catch(err => console.log("Error playing typing music:", err));
-        }
-      } else {
-        stopTypingMusic();
-      }
-    }
-
-    function stopTypingMusic() {
-      if (!typingMusic.paused) {
-        typingMusic.pause();
-        typingMusic.currentTime = 0;
       }
     }
   </script>
