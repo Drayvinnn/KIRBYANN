@@ -40,16 +40,15 @@
       margin-bottom: 1rem;
     }
 
-  input {
-  width: 90%;
-  padding: 1rem;
-  border: 2px solid #ff66aa;
-  border-radius: 10px;
-  font-size: 1rem;
-  text-align: center;
-  color: none;
-  outline: none; /* Removes the default black outline */
-}
+    input {
+      width: 90%;
+      padding: 1rem;
+      border: 2px solid #ff66aa;
+      border-radius: 10px;
+      font-size: 1rem;
+      text-align: center;
+      outline: none;
+    }
 
     .toggle-btn {
       position: absolute;
@@ -58,8 +57,15 @@
       transform: translateY(-50%);
       background: none;
       border: none;
-      cursor: pointer;
+      padding: 0;
       font-size: 1.2rem;
+      cursor: pointer;
+      line-height: 1;
+      color: inherit;
+    }
+
+    .toggle-btn:hover {
+      transform: translateY(-50%) scale(1.2);
     }
 
     .unlock-btn {
@@ -91,24 +97,27 @@
   <div class="container">
     <h2>Enter Anniversary Date</h2>
     <div class="input-wrapper">
-      <input type="password" id="codeInput" placeholder="MMDDYY" />
+      <input type="password" id="codeInput" placeholder="MMDDYY" oninput="handleTyping()" />
       <button class="toggle-btn" onclick="togglePassword()" id="toggleIcon">🙉</button>
     </div>
     <button class="unlock-btn" onclick="checkCode()">Unlock</button>
     <div class="error-message" id="errorMsg">Oops! Try again 😢</div>
   </div>
 
-  <!-- Error sound -->
-  <audio id="errorSound" src="d43d329a-2cc8-43cb-8965-4c013adf926e.mp4" preload="auto"></audio>
+  <!-- Audio files -->
+  <audio id="typingMusic" src="d43d329a-2cc8-43cb-8965-4c013adf926e.mp3" preload="auto" loop></audio>
+  <audio id="errorSound" src="d43d329a-2cc8-43cb-8965-4c013adf926e.mp3" preload="auto"></audio>
 
   <script>
     const correctCode = "12052022";
     const input = document.getElementById("codeInput");
     const errorMsg = document.getElementById("errorMsg");
     const errorSound = document.getElementById("errorSound");
+    const typingMusic = document.getElementById("typingMusic");
 
     function checkCode() {
       const inputValue = input.value.trim();
+      typingMusic.pause();
 
       if (inputValue === "") {
         errorMsg.textContent = "Enter Anniversary Date 😅";
@@ -138,10 +147,23 @@
       try {
         errorSound.currentTime = 0;
         errorSound.play().catch(err => {
-          console.log("Audio playback blocked or failed:", err);
+          console.log("Error playing error sound:", err);
         });
       } catch (err) {
-        console.log("Error playing sound:", err);
+        console.log("Playback error:", err);
+      }
+    }
+
+    function handleTyping() {
+      if (input.value.trim() !== "") {
+        if (typingMusic.paused) {
+          typingMusic.currentTime = 0;
+          typingMusic.play().catch(err => {
+            console.log("Error playing typing music:", err);
+          });
+        }
+      } else {
+        typingMusic.pause();
       }
     }
   </script>
