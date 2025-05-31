@@ -284,6 +284,7 @@
     video.addEventListener('play', () => {
       videoIsPlaying = true;
       bgMusic.pause();
+      // Enter fullscreen on play
       if (video.requestFullscreen) {
         video.requestFullscreen();
       } else if (video.webkitRequestFullscreen) {
@@ -293,24 +294,28 @@
       }
     });
 
-    video.addEventListener('pause', () => {
-      if (musicActivatedOnce) {
-        bgMusic.play();
-        videoIsPlaying = false;
+    function playBackgroundMusic() {
+      if (!bgMusic.muted) {
+        bgMusic.play().catch(() => {});
+      } else {
+        bgMusic.muted = false;
+        bgMusic.play().catch(() => {});
       }
+      videoIsPlaying = false;
+    }
+
+    video.addEventListener('pause', () => {
+      playBackgroundMusic();
     });
 
     video.addEventListener('ended', () => {
-      if (musicActivatedOnce) {
-        bgMusic.play();
-        videoIsPlaying = false;
-      }
+      playBackgroundMusic();
     });
 
     function startMusicOnUserInteraction() {
       if (!musicActivatedOnce && !videoIsPlaying) {
         bgMusic.muted = false;
-        bgMusic.play();
+        bgMusic.play().catch(() => {});
         musicActivatedOnce = true;
       }
       window.removeEventListener('click', startMusicOnUserInteraction);

@@ -296,8 +296,9 @@
 
   let lipbiteDisabled = false;
   let videoPlaying = false;
+  let videoWasPlayingWhenModalOpened = false;
 
-  // When clicking images: open modal, mute video, play bg music
+  // Image click to open modal
   document.querySelectorAll('.photo-grid img').forEach(img => {
     img.addEventListener('click', (event) => {
       event.stopPropagation();
@@ -308,29 +309,36 @@
       lipbiteBtn.disabled = true;
       lipbiteDisabled = true;
 
-      // Mute the video when modal opens
+      // Remember if video was playing before modal open
+      videoWasPlayingWhenModalOpened = !video.paused;
+
+      // Mute video while modal open
       video.muted = true;
 
-      // Play background music if paused
-      if (bgMusic.paused) {
+      // Only play bg music if video was NOT playing before
+      if (!videoWasPlayingWhenModalOpened && bgMusic.paused) {
         bgMusic.play().catch(() => {});
       }
     });
   });
 
+  // Close modal function
   const closeModal = () => {
     modal.style.display = 'none';
     lipbiteBtn.classList.remove('dark');
     lipbiteBtn.disabled = false;
     lipbiteDisabled = false;
 
-    // Unmute video when modal closes
+    // Unmute video
     video.muted = false;
 
-    // Resume music only if video is NOT playing
-    if (!videoPlaying && bgMusic.paused) {
+    // Resume bg music only if video was NOT playing before modal opened
+    if (!videoWasPlayingWhenModalOpened && bgMusic.paused) {
       bgMusic.play().catch(() => {});
     }
+
+    // Reset flag
+    videoWasPlayingWhenModalOpened = false;
   };
 
   modalClose.addEventListener('click', closeModal);
@@ -346,17 +354,12 @@
     }
   });
 
-  // When clicking "Click Here" button: show confirm, pause bg music, pause video if playing
   clickHereBtn.addEventListener('click', (e) => {
     e.preventDefault();
     confirmDialog.style.display = 'flex';
 
-    // Pause background music
-    if (!bgMusic.paused) {
-      bgMusic.pause();
-    }
+    if (!bgMusic.paused) bgMusic.pause();
 
-    // Pause video if playing and mark paused by clickHereBtn
     if (!video.paused) {
       video.pause();
       video.setAttribute('data-paused-by-clickhere', 'true');
@@ -370,12 +373,10 @@
   confirmNo.addEventListener('click', () => {
     confirmDialog.style.display = 'none';
 
-    // Resume background music
-    if (bgMusic.paused) {
+    if (bgMusic.paused && !videoPlaying) {
       bgMusic.play().catch(() => {});
     }
 
-    // Resume video only if it was paused by clickHereBtn
     if (
       video.getAttribute('data-paused-by-clickhere') === 'true' &&
       video.paused
@@ -385,11 +386,9 @@
     }
   });
 
-  // Track video play/pause state
+  // Track video play state and sync with bg music
   video.addEventListener('play', () => {
     videoPlaying = true;
-
-    // Pause background music when video plays
     if (!bgMusic.paused) {
       bgMusic.pause();
     }
@@ -398,14 +397,11 @@
   video.addEventListener('pause', () => {
     videoPlaying = false;
 
-    // Resume background music when video pauses (if modal not open)
-    if (!modal.style.display || modal.style.display === 'none') {
-      if (bgMusic.paused) {
-        bgMusic.play().catch(() => {});
-      }
+    // Only resume bg music if modal not open
+    if (modal.style.display === 'none' && bgMusic.paused) {
+      bgMusic.play().catch(() => {});
     }
   });
 </script>
-
 </body>
 </html>
