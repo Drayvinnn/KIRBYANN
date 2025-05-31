@@ -16,33 +16,34 @@
     }
 
     .lipbite-icon {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 2.5rem;
-  z-index: 1001;
-  user-select: none;
-  cursor: pointer;
-  transition: transform 0.3s ease, filter 0.3s ease;
-  background: none;
-  border: none;
-  color: inherit;
-  padding: 0;
-}
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 2.5rem;
+      z-index: 1001;
+      user-select: none;
+      cursor: pointer;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      background: none;
+      border: none;
+      color: inherit;
+      padding: 0;
+    }
 
-.lipbite-icon:hover {
-  transform: scale(1.2);
-}
+    .lipbite-icon:hover {
+      transform: scale(1.2);
+    }
 
-.lipbite-icon.dark {
-  filter: brightness(0.4);
-}
+    .lipbite-icon.dark {
+      filter: brightness(0.4);
+    }
 
-.lipbite-icon:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-  pointer-events: none;
-}
+    .lipbite-icon:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
     .container {
       max-width: 900px;
       width: 100%;
@@ -138,12 +139,13 @@
     .video-section {
       display: flex;
       justify-content: center;
+      align-items: center;
       margin-top: 2rem;
     }
 
     .video-section video {
       width: 100%;
-      max-width: 480px;
+      max-width: 720px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
@@ -171,22 +173,20 @@
       cursor: pointer;
     }
 
-  .modal .close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 4rem;  /* increased size */
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-  transition: none;
-}
+    .modal .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 4rem;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      background: transparent;
+      padding: 0;
+    }
+
     .modal .close:hover {
       color: #f564a9;
-      background: transparent;
     }
 
     @media (max-width: 900px) {
@@ -208,10 +208,13 @@
 </head>
 <body>
 
+  <!-- Background Music -->
+  <audio id="bgMusic" src="a05451e7-1b21-4821-be26-5245695e0219.mp3" autoplay loop muted></audio>
+
   <div class="container">
     <div class="message-box">
       <h1>Happy Monthsary!</h1>
-  <p>Hi, my love. I love you to the moon and back—and beyond</p>
+      <p>Hi, my love. I love you to the moon and back—and beyond</p>
       <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
 
       <div class="flower-container">
@@ -226,7 +229,7 @@
 
     <div class="video-section">
       <div>
-        <video controls>
+        <video id="loveVideo" controls>
           <source src="snaptik_7218999084768627995.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -240,7 +243,6 @@
     </div>
   </div>
 
-  <!-- Modal for Zoomed Image -->
   <div class="modal" id="modal">
     <span class="close" id="modalClose">&times;</span>
     <img id="modalImage" src="" alt="Zoomed Image" />
@@ -251,8 +253,11 @@
     const modalImage = document.getElementById('modalImage');
     const modalClose = document.getElementById('modalClose');
     const lipbiteBtn = document.getElementById('lipbiteBtn');
+    const bgMusic = document.getElementById('bgMusic');
+    const video = document.getElementById('loveVideo');
     let lipbiteDisabled = false;
 
+    // Modal image zoom
     document.querySelectorAll('.photo-grid img').forEach(img => {
       img.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -285,10 +290,39 @@
       }
     });
 
-    // ⬇️ Updated "Click Here" to go directly without confirmation
-    const clickHereBtn = document.getElementById('clickHereBtn');
-    clickHereBtn.addEventListener('click', () => {
+    document.getElementById('clickHereBtn').addEventListener('click', () => {
       window.location.href = 'index.html';
+    });
+
+    // Background music control on video play/pause/end
+    video.addEventListener('play', () => {
+      bgMusic.pause();
+    });
+
+    video.addEventListener('pause', () => {
+      bgMusic.play();
+    });
+
+    video.addEventListener('ended', () => {
+      bgMusic.play();
+    });
+
+    // Autoplay workaround: enable audio after interaction if autoplay fails
+    document.addEventListener('DOMContentLoaded', () => {
+      const tryPlay = () => {
+        bgMusic.muted = false;
+        bgMusic.play().catch(() => {
+          const resumeMusic = () => {
+            bgMusic.muted = false;
+            bgMusic.play();
+            document.removeEventListener('click', resumeMusic);
+            document.removeEventListener('touchstart', resumeMusic);
+          };
+          document.addEventListener('click', resumeMusic);
+          document.addEventListener('touchstart', resumeMusic);
+        });
+      };
+      tryPlay();
     });
   </script>
 </body>

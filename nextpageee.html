@@ -71,14 +71,6 @@
       z-index: 2;
     }
 
-    .message-box p {
-      margin-top: 0;
-      font-size: 1.25rem;
-      line-height: 1.4;
-      position: relative;
-      z-index: 2;
-    }
-
     .flower-container {
       position: absolute;
       bottom: 20px;
@@ -144,9 +136,10 @@
 
     .video-section video {
       width: 100%;
-      max-width: 480px;
+      max-width: 700px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      height: auto;
     }
 
     .click-button {
@@ -189,24 +182,21 @@
       cursor: pointer;
     }
 
-   
-  .modal .close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 4rem;  /* increased size */
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-  transition: none;
-}
+    .modal .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 4rem;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+    }
 
     .modal .close:hover {
       color: #f564a9;
-      background: transparent;
     }
 
     @media (max-width: 900px) {
@@ -231,7 +221,6 @@
   <div class="container">
     <div class="message-box">
       <h1>Happy Monthsary!</h1>
-
       <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
 
       <div class="flower-container">
@@ -246,7 +235,7 @@
 
     <div class="video-section">
       <div>
-        <video controls>
+        <video id="myVideo" controls>
           <source src="snaptik_7400391034791922987.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -264,12 +253,39 @@
     <img id="modalImage" src="" alt="Zoomed Image" />
   </div>
 
+  <!-- 🎵 Background Music -->
+  <audio id="bgMusic" src="tiktokio.com_r0KOTKwFW7ANKnFcMqQ6.mp3" loop muted></audio>
+
   <script>
     const modal = document.getElementById('modal');
     const modalImage = document.getElementById('modalImage');
     const modalClose = document.getElementById('modalClose');
     const lipbiteBtn = document.getElementById('lipbiteBtn');
+    const video = document.getElementById('myVideo');
+    const bgMusic = document.getElementById('bgMusic');
+    const clickHereBtn = document.getElementById('clickHereBtn');
     let lipbiteDisabled = false;
+
+    // Handle background music autoplay across browsers
+    document.addEventListener('DOMContentLoaded', () => {
+      bgMusic.volume = 0.5;
+      bgMusic.play().catch(() => {});
+
+      function enableAudioPlayback() {
+        bgMusic.muted = false;
+        bgMusic.play().catch(() => {});
+        document.removeEventListener('click', enableAudioPlayback);
+        document.removeEventListener('keydown', enableAudioPlayback);
+      }
+
+      document.addEventListener('click', enableAudioPlayback);
+      document.addEventListener('keydown', enableAudioPlayback);
+    });
+
+    // Pause/resume background music when video plays/pauses
+    video.addEventListener('play', () => bgMusic.pause());
+    video.addEventListener('pause', () => bgMusic.play());
+    video.addEventListener('ended', () => bgMusic.play());
 
     document.querySelectorAll('.photo-grid img').forEach(img => {
       img.addEventListener('click', (event) => {
@@ -303,7 +319,6 @@
       }
     });
 
-    const clickHereBtn = document.getElementById('clickHereBtn');
     clickHereBtn.addEventListener('click', () => {
       window.location.href = 'nextpageeee.html';
     });

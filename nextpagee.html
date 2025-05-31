@@ -120,7 +120,7 @@
 
     .photo-grid img {
       width: 100%;
-      max-width: 280px; /* Increased image size */
+      max-width: 280px;
       height: auto;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -215,6 +215,12 @@
 </head>
 <body>
 
+  <!-- Background Music -->
+  <audio id="bgMusic" autoplay loop muted>
+    <source src="073ea834-9583-4478-a93f-48d95aac2398.mp3" type="audio/mp3" />
+    Your browser does not support the audio element.
+  </audio>
+
   <div class="container">
     <div class="message-box">
       <h1>Happy Monthsary!</h1>
@@ -231,7 +237,7 @@
       <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
     </div>
 
-<div class="photo-grid">
+    <div class="photo-grid">
       <img src="-6244485391998631720_121.jpg" alt="Pic 1" />
       <img src="ab44174f-aa81-4b4f-8306-083c3671714b.jpg" alt="Pic 2" />
       <img src="IMG_20241003_003457_352.jpg" alt="Pic 3" />
@@ -243,123 +249,125 @@
       <img src="b37ffb6e-f535-45c3-bb59-24dfe89204f1.jpg" alt="Pic 9" />
     </div>
 
-    <div class="center-content">
-      <img src="" alt="" />
-      <button id="clickHereBtn">Click Here</button>
-    </div>
-  </div>
-
-  <div class="modal" id="modal">
-    <span class="close" id="modalClose">&times;</span>
-    <img id="modalImage" src="" alt="Zoomed Image" />
-  </div>
-
-  <div id="confirmDialog" style="
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100vw;
-    height:100vh;
-    background-color: rgba(0,0,0,0.7);
-    z-index:1002;
-    justify-content:center;
-    align-items:center;
-  ">
-    <div style="
-      background:white;
-      padding: 3rem 2.5rem;
-      border-radius: 16px;
-      text-align:center;
-      max-width: 360px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-      font-size: 1.25rem;
-      color:#333;
-    ">
-      <p style="margin-bottom:2rem;">Are you sure you want to continue, ano jay?</p>
-      <div style="display:flex; justify-content:space-between; gap:1.5rem;">
-        <button id="confirmYes" style="
-          flex:1;
-          padding: 0.75rem 0;
-          background-color:#fb1684;
-          color:white;
-          border:none;
-          border-radius:12px;
-          font-size: 1.15rem;
-          cursor:pointer;
-          box-shadow: 0 3px 8px rgba(251, 22, 132, 0.7);
-        ">jay</button>
-        <button id="confirmNo" style="
-          flex:1;
-          padding: 0.75rem 0;
-          background-color:#ccc;
-          color:black;
-          border:none;
-          border-radius:12px;
-          font-size: 1.15rem;
-          cursor:pointer;
-        ">no wala</button>
+    <div class="video-section">
+      <div>
+        <video controls id="videoPlayer">
+          <source src="fcded0b0-1f60-4bad-9b94-803d76f61231.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div class="center-content">
+          <img src="" alt="" />
+          <button id="clickHereBtn">Click Here</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    const modal = document.getElementById('modal');
-    const modalImage = document.getElementById('modalImage');
-    const modalClose = document.getElementById('modalClose');
-    const lipbiteBtn = document.getElementById('lipbiteBtn');
-    const confirmDialog = document.getElementById('confirmDialog');
-    const confirmYes = document.getElementById('confirmYes');
-    const confirmNo = document.getElementById('confirmNo');
+    <div class="modal" id="modal">
+      <span class="close" id="modalClose">&times;</span>
+      <img id="modalImage" src="" alt="Zoomed Image" />
+    </div>
 
-    let lipbiteDisabled = false;
+    <div id="confirmDialog" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color: rgba(0,0,0,0.7); z-index:1002; justify-content:center; align-items:center;">
+      <div style="background:white; padding: 3rem 2.5rem; border-radius: 16px; text-align:center; max-width: 360px; box-shadow: 0 6px 20px rgba(0,0,0,0.35); font-size: 1.25rem; color:#333;">
+        <p style="margin-bottom:2rem;">Are you sure you want to continue, ano jay?</p>
+        <div style="display:flex; justify-content:space-between; gap:1.5rem;">
+          <button id="confirmYes" style="flex:1; padding: 0.75rem 0; background-color:#fb1684; color:white; border:none; border-radius:12px; font-size: 1.15rem; cursor:pointer; box-shadow: 0 3px 8px rgba(251, 22, 132, 0.7);">jay</button>
+          <button id="confirmNo" style="flex:1; padding: 0.75rem 0; background-color:#ccc; color:black; border:none; border-radius:12px; font-size: 1.15rem; cursor:pointer;">no wala</button>
+        </div>
+      </div>
+    </div>
 
-    document.querySelectorAll('.photo-grid img').forEach(img => {
-      img.addEventListener('click', (event) => {
-        event.stopPropagation();
-        modal.style.display = 'flex';
-        modalImage.src = img.src;
-        modalImage.alt = img.alt;
-        lipbiteBtn.classList.add('dark');
-        lipbiteBtn.disabled = true;
-        lipbiteDisabled = true;
+    <script>
+      const modal = document.getElementById('modal');
+      const modalImage = document.getElementById('modalImage');
+      const modalClose = document.getElementById('modalClose');
+      const lipbiteBtn = document.getElementById('lipbiteBtn');
+      const confirmDialog = document.getElementById('confirmDialog');
+      const confirmYes = document.getElementById('confirmYes');
+      const confirmNo = document.getElementById('confirmNo');
+      const bgMusic = document.getElementById('bgMusic');
+      const videoPlayer = document.getElementById('videoPlayer');
+
+      let lipbiteDisabled = false;
+
+      document.querySelectorAll('.photo-grid img').forEach(img => {
+        img.addEventListener('click', (event) => {
+          event.stopPropagation();
+          modal.style.display = 'flex';
+          modalImage.src = img.src;
+          modalImage.alt = img.alt;
+          lipbiteBtn.classList.add('dark');
+          lipbiteBtn.disabled = true;
+          lipbiteDisabled = true;
+        });
       });
-    });
 
-    const closeModal = () => {
-      modal.style.display = 'none';
-      lipbiteBtn.classList.remove('dark');
-      lipbiteBtn.disabled = false;
-      lipbiteDisabled = false;
-    };
+      const closeModal = () => {
+        modal.style.display = 'none';
+        lipbiteBtn.classList.remove('dark');
+        lipbiteBtn.disabled = false;
+        lipbiteDisabled = false;
+      };
 
-    modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal || e.target === modalImage) {
-        closeModal();
+      modalClose.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target === modalImage) {
+          closeModal();
+        }
+      });
+
+      lipbiteBtn.addEventListener('click', () => {
+        if (!lipbiteDisabled) {
+          window.location.href = 'nextpage.html';
+        }
+      });
+
+      document.getElementById('clickHereBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        confirmDialog.style.display = 'flex';
+      });
+
+      confirmYes.addEventListener('click', () => {
+        window.location.href = 'nextpageee.html';
+      });
+
+      confirmNo.addEventListener('click', () => {
+        confirmDialog.style.display = 'none';
+      });
+
+      videoPlayer.addEventListener('play', () => {
+        bgMusic.pause();
+      });
+
+      videoPlayer.addEventListener('pause', () => {
+        bgMusic.play();
+      });
+
+      videoPlayer.addEventListener('ended', () => {
+        bgMusic.play();
+      });
+
+      // Attempt to autoplay muted background music on page load
+      window.addEventListener('load', () => {
+        bgMusic.play().catch(() => {
+          console.log("Autoplay blocked. Waiting for user interaction.");
+        });
+      });
+
+      // On first user interaction, unmute and play background music with sound
+      function unmuteAndPlay() {
+        bgMusic.muted = false;
+        bgMusic.play().catch(() => {
+          console.log("Playback failed after unmute.");
+        });
+        window.removeEventListener('click', unmuteAndPlay);
+        window.removeEventListener('keydown', unmuteAndPlay);
       }
-    });
 
-    lipbiteBtn.addEventListener('click', () => {
-      if (!lipbiteDisabled) {
-        window.location.href = 'nextpage.html';
-      }
-    });
+      window.addEventListener('click', unmuteAndPlay);
+      window.addEventListener('keydown', unmuteAndPlay);
 
-    const clickHereBtn = document.getElementById('clickHereBtn');
-    clickHereBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      confirmDialog.style.display = 'flex';
-    });
-
-    confirmYes.addEventListener('click', () => {
-      window.location.href = 'nextpageee.html';
-    });
-
-    confirmNo.addEventListener('click', () => {
-      confirmDialog.style.display = 'none';
-    });
-  </script>
+    </script>
+  </div>
 </body>
 </html>
-    
