@@ -144,7 +144,9 @@
 
     function handleTyping() {
       if (input.value.trim() !== "") {
-        playMusicFromStart();
+        if (actionSound.paused) {  // Play only if not playing already
+          playMusicFromStart();
+        }
       } else {
         stopMusic();
       }
