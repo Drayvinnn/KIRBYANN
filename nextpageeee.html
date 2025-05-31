@@ -139,13 +139,12 @@
     .video-section {
       display: flex;
       justify-content: center;
-      align-items: center;
       margin-top: 2rem;
     }
 
     .video-section video {
       width: 100%;
-      max-width: 720px;
+      max-width: 480px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
@@ -183,10 +182,13 @@
       font-weight: bold;
       background: transparent;
       padding: 0;
+      border-radius: 0;
+      transition: none;
     }
 
     .modal .close:hover {
       color: #f564a9;
+      background: transparent;
     }
 
     @media (max-width: 900px) {
@@ -208,9 +210,6 @@
 </head>
 <body>
 
-  <!-- Background Music -->
-  <audio id="bgMusic" src="a05451e7-1b21-4821-be26-5245695e0219.mp3" autoplay loop muted></audio>
-
   <div class="container">
     <div class="message-box">
       <h1>Happy Monthsary!</h1>
@@ -229,7 +228,7 @@
 
     <div class="video-section">
       <div>
-        <video id="loveVideo" controls>
+        <video controls id="myVideo">
           <source src="snaptik_7218999084768627995.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -243,6 +242,10 @@
     </div>
   </div>
 
+  <!-- Background music audio element -->
+  <audio id="bgMusic" src="a05451e7-1b21-4821-be26-5245695e0219.mp3" loop muted></audio>
+
+  <!-- Modal for Zoomed Image -->
   <div class="modal" id="modal">
     <span class="close" id="modalClose">&times;</span>
     <img id="modalImage" src="" alt="Zoomed Image" />
@@ -253,11 +256,12 @@
     const modalImage = document.getElementById('modalImage');
     const modalClose = document.getElementById('modalClose');
     const lipbiteBtn = document.getElementById('lipbiteBtn');
+    const video = document.getElementById('myVideo');
     const bgMusic = document.getElementById('bgMusic');
-    const video = document.getElementById('loveVideo');
+
     let lipbiteDisabled = false;
 
-    // Modal image zoom
+    // Image modal open
     document.querySelectorAll('.photo-grid img').forEach(img => {
       img.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -270,6 +274,7 @@
       });
     });
 
+    // Close modal function
     const closeModal = () => {
       modal.style.display = 'none';
       lipbiteBtn.classList.remove('dark');
@@ -290,11 +295,13 @@
       }
     });
 
-    document.getElementById('clickHereBtn').addEventListener('click', () => {
+    // "Click Here" button goes directly without confirmation
+    const clickHereBtn = document.getElementById('clickHereBtn');
+    clickHereBtn.addEventListener('click', () => {
       window.location.href = 'index.html';
     });
 
-    // Background music control on video play/pause/end
+    // Background music control based on video playback
     video.addEventListener('play', () => {
       bgMusic.pause();
     });
@@ -307,23 +314,26 @@
       bgMusic.play();
     });
 
-    // Autoplay workaround: enable audio after interaction if autoplay fails
+    // Try to play muted bg music on load
     document.addEventListener('DOMContentLoaded', () => {
-      const tryPlay = () => {
-        bgMusic.muted = false;
-        bgMusic.play().catch(() => {
-          const resumeMusic = () => {
-            bgMusic.muted = false;
-            bgMusic.play();
-            document.removeEventListener('click', resumeMusic);
-            document.removeEventListener('touchstart', resumeMusic);
-          };
-          document.addEventListener('click', resumeMusic);
-          document.addEventListener('touchstart', resumeMusic);
-        });
-      };
-      tryPlay();
+      bgMusic.play().catch(() => {
+        // Autoplay might be blocked until user interaction
+      });
     });
+
+    // Unmute and play background music on first user interaction
+    function startMusicOnUserInteraction() {
+      if (bgMusic.muted) {
+        bgMusic.muted = false;
+        bgMusic.play();
+      }
+      // Remove event listeners after first interaction
+      window.removeEventListener('click', startMusicOnUserInteraction);
+      window.removeEventListener('touchstart', startMusicOnUserInteraction);
+    }
+
+    window.addEventListener('click', startMusicOnUserInteraction);
+    window.addEventListener('touchstart', startMusicOnUserInteraction);
   </script>
 </body>
 </html>

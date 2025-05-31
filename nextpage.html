@@ -211,12 +211,15 @@
         max-width: 100%;
       }
     }
+
+    audio {
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Background Music -->
-  <audio id="bgMusic" loop>
+  <audio id="bgMusic" autoplay loop>
     <source src="Download (audio-extractor.net).mp3" type="audio/mp3" />
     Your browser does not support the audio element.
   </audio>
@@ -237,7 +240,6 @@
     </div>
 
     <div class="photo-grid">
-      <!-- Replace these with your actual image paths -->
       <img src="3f92e7ea-43c1-43b8-9e9f-92eeb801c8e2.jpg" alt="Pic 1" />
       <img src="bc9c32d5-1d3e-4aeb-b01a-6c402a443771.jpg" alt="Pic 2" />
       <img src="52589b7c-0418-404c-a6ba-79f065c9fc7d.jpg" alt="Pic 3" />
@@ -254,7 +256,7 @@
 
     <div class="video-section">
       <div>
-        <video controls>
+        <video controls id="videoPlayer">
           <source src="0531d0ae-8a84-4025-b5fd-37a60bbabd7e.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -289,12 +291,11 @@
     const modalImage = document.getElementById('modalImage');
     const modalClose = document.getElementById('modalClose');
     const lipbiteBtn = document.getElementById('lipbiteBtn');
+    const video = document.getElementById('videoPlayer');
     const bgMusic = document.getElementById('bgMusic');
-    const video = document.querySelector('.video-section video');
 
     let lipbiteDisabled = false;
 
-    // Image modal
     document.querySelectorAll('.photo-grid img').forEach(img => {
       img.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -327,28 +328,25 @@
       }
     });
 
-    // Background music autoplay after user interaction
-    document.addEventListener('DOMContentLoaded', () => {
-      const enableAudio = () => {
-        bgMusic.play().catch(() => {});
-        document.removeEventListener('click', enableAudio);
-      };
-      document.addEventListener('click', enableAudio);
-
-      video.addEventListener('play', () => {
-        if (!bgMusic.paused) {
-          bgMusic.pause();
-        }
-      });
-
-      video.addEventListener('pause', () => {
-        bgMusic.play().catch(() => {});
-      });
-
-      video.addEventListener('ended', () => {
-        bgMusic.play().catch(() => {});
-      });
+    // Background music control based on video
+    video.addEventListener('play', () => {
+      bgMusic.pause();
     });
+
+    video.addEventListener('pause', () => {
+      bgMusic.play().catch(() => {});
+    });
+
+    video.addEventListener('ended', () => {
+      bgMusic.play().catch(() => {});
+    });
+
+    // Force play background music on first interaction (some browsers block autoplay)
+    document.addEventListener('click', () => {
+      if (bgMusic.paused) {
+        bgMusic.play().catch(() => {});
+      }
+    }, { once: true });
   </script>
 
 </body>

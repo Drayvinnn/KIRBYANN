@@ -71,6 +71,14 @@
       z-index: 2;
     }
 
+    .message-box p {
+      margin-top: 0;
+      font-size: 1.25rem;
+      line-height: 1.4;
+      position: relative;
+      z-index: 2;
+    }
+
     .flower-container {
       position: absolute;
       bottom: 20px;
@@ -136,10 +144,9 @@
 
     .video-section video {
       width: 100%;
-      max-width: 700px;
+      max-width: 480px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      height: auto;
     }
 
     .click-button {
@@ -193,10 +200,12 @@
       background: transparent;
       padding: 0;
       border-radius: 0;
+      transition: none;
     }
 
     .modal .close:hover {
       color: #f564a9;
+      background: transparent;
     }
 
     @media (max-width: 900px) {
@@ -218,9 +227,16 @@
 </head>
 <body>
 
+  <!-- Background music -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="tiktokio.com_r0KOTKwFW7ANKnFcMqQ6.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
   <div class="container">
     <div class="message-box">
       <h1>Happy Monthsary!</h1>
+
       <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
 
       <div class="flower-container">
@@ -235,7 +251,7 @@
 
     <div class="video-section">
       <div>
-        <video id="myVideo" controls>
+        <video controls>
           <source src="snaptik_7400391034791922987.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -253,40 +269,24 @@
     <img id="modalImage" src="" alt="Zoomed Image" />
   </div>
 
-  <!-- 🎵 Background Music -->
-  <audio id="bgMusic" src="tiktokio.com_r0KOTKwFW7ANKnFcMqQ6.mp3" loop muted></audio>
-
   <script>
     const modal = document.getElementById('modal');
     const modalImage = document.getElementById('modalImage');
     const modalClose = document.getElementById('modalClose');
     const lipbiteBtn = document.getElementById('lipbiteBtn');
-    const video = document.getElementById('myVideo');
-    const bgMusic = document.getElementById('bgMusic');
-    const clickHereBtn = document.getElementById('clickHereBtn');
     let lipbiteDisabled = false;
 
-    // Handle background music autoplay across browsers
-    document.addEventListener('DOMContentLoaded', () => {
-      bgMusic.volume = 0.5;
-      bgMusic.play().catch(() => {});
+    const bgMusic = document.getElementById('bgMusic');
+    const video = document.querySelector('.video-section video');
 
-      function enableAudioPlayback() {
-        bgMusic.muted = false;
+    // To comply with autoplay policies, try to play music after first user interaction if needed
+    document.addEventListener('click', () => {
+      if (bgMusic.paused) {
         bgMusic.play().catch(() => {});
-        document.removeEventListener('click', enableAudioPlayback);
-        document.removeEventListener('keydown', enableAudioPlayback);
       }
+    }, { once: true });
 
-      document.addEventListener('click', enableAudioPlayback);
-      document.addEventListener('keydown', enableAudioPlayback);
-    });
-
-    // Pause/resume background music when video plays/pauses
-    video.addEventListener('play', () => bgMusic.pause());
-    video.addEventListener('pause', () => bgMusic.play());
-    video.addEventListener('ended', () => bgMusic.play());
-
+    // Photo grid images click for modal (no images currently in your HTML, add if you want)
     document.querySelectorAll('.photo-grid img').forEach(img => {
       img.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -319,8 +319,23 @@
       }
     });
 
+    const clickHereBtn = document.getElementById('clickHereBtn');
     clickHereBtn.addEventListener('click', () => {
       window.location.href = 'nextpageeee.html';
+    });
+
+    // Pause background music when video plays
+    video.addEventListener('play', () => {
+      bgMusic.pause();
+    });
+
+    // Resume background music when video pauses or ends
+    video.addEventListener('pause', () => {
+      bgMusic.play().catch(() => {});
+    });
+
+    video.addEventListener('ended', () => {
+      bgMusic.play().catch(() => {});
     });
   </script>
 </body>
