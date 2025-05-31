@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Monthsary Message with 9 Pictures</title>
   <style>
+    /* (Your existing CSS is unchanged) */
     body {
       font-family: Arial, sans-serif;
       background: #f8e1e7;
@@ -175,7 +176,7 @@
       top: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(0, 0, 0, 0.95);
+      background-color: rgba(1, 1, 1, 1);
       justify-content: center;
       align-items: center;
     }
@@ -184,7 +185,6 @@
       max-width: 95vw;
       max-height: 95vh;
       border-radius: 10px;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
       transform: scale(1.05);
       transition: transform 0.3s ease;
       cursor: pointer;
@@ -215,205 +215,186 @@
 </head>
 <body>
 
-  <!-- Background Music -->
-  <audio id="bgMusic" autoplay loop>
-    <source src="073ea834-9583-4478-a93f-48d95aac2398.mp3" type="audio/mp3" />
-    Your browser does not support the audio element.
-  </audio>
+<audio id="bgMusic" autoplay loop>
+  <source src="073ea834-9583-4478-a93f-48d95aac2398.mp3" type="audio/mp3" />
+  Your browser does not support the audio element.
+</audio>
 
-  <div class="container">
-    <div class="message-box">
-      <h1>Happy Monthsary!</h1>
-      <p>If I had nine lives like a cat, I’d fall in love with you in every single one. Happy Monthsary, my forever favorite</p>
-      <div class="flower-container">
-        <span class="flower">🌸</span>
-        <span class="flower">🌼</span>
-        <span class="flower">🌺</span>
-        <span class="flower">🌻</span>
-        <span class="flower">🌷</span>
-        <span class="flower">💐</span>
-      </div>
-      <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
+<div class="container">
+  <div class="message-box">
+    <h1>Happy Monthsary!</h1>
+    <p>If I had nine lives like a cat, I’d fall in love with you in every single one. Happy Monthsary, my forever favorite</p>
+    <div class="flower-container">
+      <span class="flower">🌸</span>
+      <span class="flower">🌼</span>
+      <span class="flower">🌺</span>
+      <span class="flower">🌻</span>
+      <span class="flower">🌷</span>
+      <span class="flower">💐</span>
     </div>
-
-    <div class="photo-grid">
-      <!-- Replace these with your actual image files -->
-      <img src="-6244485391998631720_121.jpg" alt="Pic 1" />
-      <img src="ab44174f-aa81-4b4f-8306-083c3671714b.jpg" alt="Pic 2" />
-      <img src="IMG_20241003_003457_352.jpg" alt="Pic 3" />
-      <img src="394901033_301494242744734_4155546657960693222_n.jpg" alt="Pic 4" />
-      <img src="517dbf7d-ea2d-4aa4-8ebd-959257b48b7e.jpg" alt="Pic 5" />
-      <img src="394834463_884138846398092_4729729923797315761_n.jpg" alt="Pic 6" />
-      <img src="IMG_20240220_011647_422.jpg" alt="Pic 7" />
-      <img src="-6100163530096491329_121.jpg" alt="Pic 8" />
-      <img src="b37ffb6e-f535-45c3-bb59-24dfe89204f1.jpg" alt="Pic 9" />
-    </div>
-
-    <div class="video-section">
-      <div>
-        <video controls>
-          <source src="fcded0b0-1f60-4bad-9b94-803d76f61231.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-
-        <div class="center-content">
-          <img src="" alt="" />
-          <button id="clickHereBtn">Click Here</button>
-        </div>
-      </div>
-    </div>
+    <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
   </div>
 
-  <div class="modal" id="modal">
-    <span class="close" id="modalClose">&times;</span>
-    <img id="modalImage" src="" alt="Zoomed Image" />
+  <div class="photo-grid">
+    <img src="-6244485391998631720_121.jpg" alt="Pic 1" />
+    <img src="ab44174f-aa81-4b4f-8306-083c3671714b.jpg" alt="Pic 2" />
+    <img src="IMG_20241003_003457_352.jpg" alt="Pic 3" />
+    <img src="394901033_301494242744734_4155546657960693222_n.jpg" alt="Pic 4" />
+    <img src="517dbf7d-ea2d-4aa4-8ebd-959257b48b7e.jpg" alt="Pic 5" />
+    <img src="394834463_884138846398092_4729729923797315761_n.jpg" alt="Pic 6" />
+    <img src="IMG_20240220_011647_422.jpg" alt="Pic 7" />
+    <img src="-6100163530096491329_121.jpg" alt="Pic 8" />
+    <img src="b37ffb6e-f535-45c3-bb59-24dfe89204f1.jpg" alt="Pic 9" />
   </div>
 
-  <div id="confirmDialog" style="
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100vw;
-    height:100vh;
-    background-color: rgba(0,0,0,0.7);
-    z-index:1002;
-    justify-content:center;
-    align-items:center;
-  ">
-    <div style="
-      background:white;
-      padding: 3rem 2.5rem;
-      border-radius: 16px;
-      text-align:center;
-      max-width: 360px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-      font-size: 1.25rem;
-      color:#333;
-    ">
-      <p style="margin-bottom:2rem;">Are you sure you want to continue, ano jay?</p>
-      <div style="display:flex; justify-content:space-between; gap:1.5rem;">
-        <button id="confirmYes" style="
-          flex:1;
-          padding: 0.75rem 0;
-          background-color:#fb1684;
-          color:white;
-          border:none;
-          border-radius:12px;
-          font-size: 1.15rem;
-          cursor:pointer;
-          box-shadow: 0 3px 8px rgba(251, 22, 132, 0.7);
-        ">jay</button>
-        <button id="confirmNo" style="
-          flex:1;
-          padding: 0.75rem 0;
-          background-color:#ccc;
-          color:black;
-          border:none;
-          border-radius:12px;
-          font-size: 1.15rem;
-          cursor:pointer;
-        ">no wala</button>
-      </div>
+  <div class="video-section">
+    <video controls>
+      <source src="fcded0b0-1f60-4bad-9b94-803d76f61231.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <div class="center-content">
+      <img src="" alt="" />
+      <button id="clickHereBtn">Click Here</button>
     </div>
   </div>
+</div>
 
-  <script>
-    const modal = document.getElementById('modal');
-    const modalImage = document.getElementById('modalImage');
-    const modalClose = document.getElementById('modalClose');
-    const lipbiteBtn = document.getElementById('lipbiteBtn');
-    const confirmDialog = document.getElementById('confirmDialog');
-    const confirmYes = document.getElementById('confirmYes');
-    const confirmNo = document.getElementById('confirmNo');
-    const bgMusic = document.getElementById('bgMusic');
-    const video = document.querySelector('.video-section video');
+<div class="modal" id="modal">
+  <span class="close" id="modalClose">&times;</span>
+  <img id="modalImage" src="" alt="Zoomed Image" />
+</div>
 
-    let lipbiteDisabled = false;
+<div id="confirmDialog" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color: rgba(0,0,0,0.7); z-index:1002; justify-content:center; align-items:center;">
+  <div style="background:white; padding: 3rem 2.5rem; border-radius: 16px; text-align:center; max-width: 360px; box-shadow: 0 6px 20px rgba(0,0,0,0.35); font-size: 1.25rem; color:#333;">
+    <p style="margin-bottom:2rem;">Are you sure you want to continue, ano jay?</p>
+    <div style="display:flex; justify-content:space-between; gap:1.5rem;">
+      <button id="confirmYes" style="flex:1; padding: 0.75rem 0; background-color:#fb1684; color:white; border:none; border-radius:12px; font-size: 1.15rem; cursor:pointer;">jay</button>
+      <button id="confirmNo" style="flex:1; padding: 0.75rem 0; background-color:#ccc; color:black; border:none; border-radius:12px; font-size: 1.15rem; cursor:pointer;">no wala</button>
+    </div>
+  </div>
+</div>
 
-    document.querySelectorAll('.photo-grid img').forEach(img => {
-      img.addEventListener('click', (event) => {
-        event.stopPropagation();
-        modal.style.display = 'flex';
-        modalImage.src = img.src;
-        modalImage.alt = img.alt;
-        lipbiteBtn.classList.add('dark');
-        lipbiteBtn.disabled = true;
-        lipbiteDisabled = true;
-      });
-    });
+<script>
+  const modal = document.getElementById('modal');
+  const modalImage = document.getElementById('modalImage');
+  const modalClose = document.getElementById('modalClose');
+  const lipbiteBtn = document.getElementById('lipbiteBtn');
+  const confirmDialog = document.getElementById('confirmDialog');
+  const confirmYes = document.getElementById('confirmYes');
+  const confirmNo = document.getElementById('confirmNo');
+  const bgMusic = document.getElementById('bgMusic');
+  const video = document.querySelector('.video-section video');
+  const clickHereBtn = document.getElementById('clickHereBtn');
 
-    const closeModal = () => {
-      modal.style.display = 'none';
-      lipbiteBtn.classList.remove('dark');
-      lipbiteBtn.disabled = false;
-      lipbiteDisabled = false;
-    };
+  let lipbiteDisabled = false;
+  let videoPlaying = false;
 
-    modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal || e.target === modalImage) {
-        closeModal();
-      }
-    });
+  document.querySelectorAll('.photo-grid img').forEach(img => {
+    img.addEventListener('click', (event) => {
+      event.stopPropagation();
+      modal.style.display = 'flex';
+      modalImage.src = img.src;
+      modalImage.alt = img.alt;
+      lipbiteBtn.classList.add('dark');
+      lipbiteBtn.disabled = true;
+      lipbiteDisabled = true;
 
-    lipbiteBtn.addEventListener('click', () => {
-      if (!lipbiteDisabled) {
-        window.location.href = 'nextpage.html';
-      }
-    });
-
-    const clickHereBtn = document.getElementById('clickHereBtn');
-    clickHereBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      confirmDialog.style.display = 'flex';
-    });
-
-    confirmYes.addEventListener('click', () => {
-      window.location.href = 'nextpageee.html';
-    });
-
-    confirmNo.addEventListener('click', () => {
-      confirmDialog.style.display = 'none';
-    });
-
-    // Pause music when video plays and request fullscreen
-    video.addEventListener('play', () => {
+      // Pause background music when modal is open
       if (!bgMusic.paused) {
         bgMusic.pause();
       }
-
-      // Automatically request fullscreen when video starts
-      if (video.requestFullscreen) {
-        video.requestFullscreen().catch(err => {
-          console.warn("Fullscreen request failed:", err);
-        });
-      } else if (video.webkitRequestFullscreen) {
-        video.webkitRequestFullscreen();
-      } else if (video.msRequestFullscreen) {
-        video.msRequestFullscreen();
-      }
     });
+  });
 
-    // Resume music when video is paused or ends
-    video.addEventListener('pause', () => {
-      if (bgMusic.paused) {
-        bgMusic.play();
-      }
-    });
+  const closeModal = () => {
+    modal.style.display = 'none';
+    lipbiteBtn.classList.remove('dark');
+    lipbiteBtn.disabled = false;
+    lipbiteDisabled = false;
 
-    video.addEventListener('ended', () => {
-      if (bgMusic.paused) {
-        bgMusic.play();
-      }
-    });
+    // Resume music only if video is NOT playing
+    if (!videoPlaying && bgMusic.paused) {
+      bgMusic.play().catch(() => {});
+    }
+  };
 
-    // Fallback for browsers that block autoplay
-    document.body.addEventListener('click', () => {
-      if (bgMusic.paused) {
-        bgMusic.play().catch(() => {});
-      }
-    }, { once: true });
-  </script>
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal || e.target === modalImage) {
+      closeModal();
+    }
+  });
+
+  lipbiteBtn.addEventListener('click', () => {
+    if (!lipbiteDisabled) {
+      window.location.href = 'nextpage.html';
+    }
+  });
+
+  clickHereBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    confirmDialog.style.display = 'flex';
+    if (!video.paused && video.currentTime < video.duration) {
+      video.pause();
+      video.setAttribute('data-paused-by-clickhere', 'true');
+    }
+    if (bgMusic.paused) {
+      bgMusic.play().catch(() => {});
+    }
+  });
+
+  confirmYes.addEventListener('click', () => {
+    window.location.href = 'nextpageee.html';
+  });
+
+  confirmNo.addEventListener('click', () => {
+    confirmDialog.style.display = 'none';
+    if (bgMusic.paused) {
+      bgMusic.play().catch(() => {});
+    }
+    if (
+      video.getAttribute('data-paused-by-clickhere') === 'true' &&
+      video.paused
+    ) {
+      video.play().catch(() => {});
+      video.removeAttribute('data-paused-by-clickhere');
+    }
+  });
+
+  // Video play/pause logic to pause/resume background music and manage fullscreen
+  video.addEventListener('play', () => {
+    videoPlaying = true;
+    if (!bgMusic.paused) {
+      bgMusic.pause();
+    }
+    if (video.requestFullscreen) {
+      video.requestFullscreen().catch(err => {
+        console.warn("Fullscreen request failed:", err);
+      });
+    }
+  });
+
+  video.addEventListener('pause', () => {
+    videoPlaying = false;
+    if (video.currentTime < video.duration && bgMusic.paused) {
+      bgMusic.play().catch(() => {});
+    }
+  });
+
+  video.addEventListener('ended', () => {
+    videoPlaying = false;
+    if (bgMusic.paused) {
+      bgMusic.play().catch(() => {});
+    }
+  });
+
+  // Initial user click to start background music if paused and video not playing
+  document.body.addEventListener('click', () => {
+    if (bgMusic.paused && !videoPlaying) {
+      bgMusic.play().catch(() => {});
+    }
+  }, { once: true });
+</script>
 </body>
 </html>

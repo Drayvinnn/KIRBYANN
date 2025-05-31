@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Video Theater & Fullscreen</title>
+<style>
+  body {
+    margin: 0;
+    background: #222;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Theater mode styles */
+  #theater-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #111;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px #000;
+    position: relative;
+  }
+
+  video {
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  /* Fullscreen overlay styles */
+  #fullscreen-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #fullscreen-overlay video {
+    width: 100vw;
+    height: 100vh;
+    object-fit: contain;
+  }
+
+  /* Close button */
+  #close-fullscreen {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 10000;
+    line-height: 36px;
+    text-align: center;
+  }
+
+  /* Buttons */
+  #controls {
+    margin-top: 15px;
+    text-align: center;
+  }
+
+  button {
+    background: #444;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 8px;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  button:hover {
+    background: #666;
+  }
+</style>
+</head>
+<body>
+
+<div id="theater-container">
+  <video id="video" src="531d0ae-8a84-4025-b5fd-37a60bbabd7e.mp4" controls></video>
+  <div id="controls">
+    <button id="btn-theater">Theater Mode</button>
+    <button id="btn-fullscreen">Fullscreen</button>
+  </div>
+</div>
+
+<!-- Fullscreen overlay -->
+<div id="fullscreen-overlay">
+  <button id="close-fullscreen" title="Close fullscreen">×</button>
+  <video id="video-fullscreen" src="531d0ae-8a84-4025-b5fd-37a60bbabd7e.mp4" controls autoplay></video>
+</div>
+
+<script>
+  const theaterContainer = document.getElementById('theater-container');
+  const fullscreenOverlay = document.getElementById('fullscreen-overlay');
+  const btnTheater = document.getElementById('btn-theater');
+  const btnFullscreen = document.getElementById('btn-fullscreen');
+  const closeFullscreenBtn = document.getElementById('close-fullscreen');
+
+  const videoNormal = document.getElementById('video');
+  const videoFullscreen = document.getElementById('video-fullscreen');
+
+  // Toggle theater mode (dark background, centered)
+  btnTheater.addEventListener('click', () => {
+    if (theaterContainer.style.maxWidth === '100vw') {
+      // Disable theater mode (reset)
+      theaterContainer.style.maxWidth = '900px';
+      theaterContainer.style.margin = '40px auto';
+      theaterContainer.style.background = '#111';
+      btnTheater.textContent = 'Theater Mode';
+    } else {
+      // Enable theater mode (wider)
+      theaterContainer.style.maxWidth = '100vw';
+      theaterContainer.style.margin = '0 auto';
+      theaterContainer.style.background = '#000';
+      btnTheater.textContent = 'Exit Theater';
+    }
+  });
+
+  // Open fullscreen overlay
+  btnFullscreen.addEventListener('click', () => {
+    fullscreenOverlay.style.display = 'flex';
+    videoFullscreen.currentTime = videoNormal.currentTime;
+    videoFullscreen.play();
+    videoNormal.pause();
+
+    // Request fullscreen browser API for fullscreenOverlay
+    if (fullscreenOverlay.requestFullscreen) {
+      fullscreenOverlay.requestFullscreen();
+    } else if (fullscreenOverlay.webkitRequestFullscreen) {
+      fullscreenOverlay.webkitRequestFullscreen();
+    } else if (fullscreenOverlay.msRequestFullscreen) {
+      fullscreenOverlay.msRequestFullscreen();
+    }
+  });
+
+  // Close fullscreen overlay
+  closeFullscreenBtn.addEventListener('click', () => {
+    fullscreenOverlay.style.display = 'none';
+    videoNormal.currentTime = videoFullscreen.currentTime;
+    videoNormal.play();
+    videoFullscreen.pause();
+
+    // Exit fullscreen browser API
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  });
+
+  // If user exits fullscreen using ESC or other means, hide overlay
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) {
+      fullscreenOverlay.style.display = 'none';
+      videoNormal.currentTime = videoFullscreen.currentTime;
+      videoNormal.play();
+      videoFullscreen.pause();
+    }
+  });
+
+</script>
+
+</body>
+</html>

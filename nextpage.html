@@ -151,7 +151,7 @@
       width: 100%;
       max-width: 480px;
       border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0);
     }
 
     .modal {
@@ -162,7 +162,7 @@
       top: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(0, 0, 0, 0.95);
+      background-color: rgba(1, 1, 1, 1);
       justify-content: center;
       align-items: center;
     }
@@ -171,7 +171,7 @@
       max-width: 95vw;
       max-height: 95vh;
       border-radius: 10px;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 px rgba(0, 0, 0, 0);
       transform: scale(1.05);
       transition: transform 0.3s ease;
       cursor: pointer;
@@ -220,7 +220,7 @@
 <body>
 
   <audio id="bgMusic" autoplay loop>
-    <source src="Download (audio-extractor.net).mp3" type="audio/mp3" />
+    <source src="tiktokio.com_H5cpeo9K98HvXaAiLWbb.mp3" type="audio/mp3" />
     Your browser does not support the audio element.
   </audio>
 
@@ -329,20 +329,13 @@
       }
     });
 
+    // Pause background music when video plays, resume when paused or ended
     video.addEventListener('play', () => {
-      bgMusic.pause();
-
-      // Request fullscreen on video play
-      if (video.requestFullscreen) {
-        video.requestFullscreen().catch(() => {});
-      } else if (video.webkitRequestFullscreen) {
-        video.webkitRequestFullscreen();
-      } else if (video.msRequestFullscreen) {
-        video.msRequestFullscreen();
-      }
+      bgMusic.pause().catch(() => {});
     });
 
     video.addEventListener('pause', () => {
+      if (video.ended) return;
       bgMusic.play().catch(() => {});
     });
 
@@ -350,8 +343,9 @@
       bgMusic.play().catch(() => {});
     });
 
+    // Try to start background music on first user interaction if paused due to autoplay policy
     document.addEventListener('click', () => {
-      if (bgMusic.paused) {
+      if (bgMusic.paused && video.paused) {
         bgMusic.play().catch(() => {});
       }
     }, { once: true });

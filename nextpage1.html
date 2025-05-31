@@ -227,12 +227,6 @@
 </head>
 <body>
 
-  <!-- Background music -->
-  <audio id="bgMusic" autoplay loop>
-    <source src="tiktokio.com_r0KOTKwFW7ANKnFcMqQ6.mp3" type="audio/mpeg" />
-    Your browser does not support the audio element.
-  </audio>
-
   <div class="container">
     <div class="message-box">
       <h1>Happy Monthsary!</h1>
@@ -276,16 +270,6 @@
     const lipbiteBtn = document.getElementById('lipbiteBtn');
     let lipbiteDisabled = false;
 
-    const bgMusic = document.getElementById('bgMusic');
-    const video = document.querySelector('.video-section video');
-
-    // To comply with autoplay policies, try to play music after first user interaction if needed
-    document.addEventListener('click', () => {
-      if (bgMusic.paused) {
-        bgMusic.play().catch(() => {});
-      }
-    }, { once: true });
-
     // Photo grid images click for modal (no images currently in your HTML, add if you want)
     document.querySelectorAll('.photo-grid img').forEach(img => {
       img.addEventListener('click', (event) => {
@@ -324,10 +308,10 @@
       window.location.href = 'nextpageeee.html';
     });
 
-    // Pause background music when video plays and request fullscreen
-    video.addEventListener('play', () => {
-      bgMusic.pause();
+    // Pause video fullscreen and controls without music since no background music now
+    const video = document.querySelector('.video-section video');
 
+    video.addEventListener('play', () => {
       if (video.requestFullscreen) {
         video.requestFullscreen();
       } else if (video.webkitRequestFullscreen) { /* Safari */
@@ -335,15 +319,6 @@
       } else if (video.msRequestFullscreen) { /* IE11 */
         video.msRequestFullscreen();
       }
-    });
-
-    // Resume background music when video pauses or ends
-    video.addEventListener('pause', () => {
-      bgMusic.play().catch(() => {});
-    });
-
-    video.addEventListener('ended', () => {
-      bgMusic.play().catch(() => {});
     });
   </script>
 </body>
