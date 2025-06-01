@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Monthsary Message with 9 Pictures</title>
   <style>
-     body {
+    body {
       font-family: Arial, sans-serif;
       background: #f8e1e7;
       display: flex;
@@ -166,7 +166,7 @@
       min-width: 200px;
       border: none;
       border-radius: 8px;
-      background-color: #ffffff;
+      background-color: #fb1684;
       color: white;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -177,22 +177,21 @@
       background-color: #e21576;
     }
 
-   .modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(1, 1, 1, 0.95); /* Slightly more elegant dark */
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 1rem;
-  box-sizing: border-box;
-}
-
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(1, 1, 1, 0.95);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
 
     .modal img, .modal video {
       max-width: 95vw;
@@ -233,7 +232,6 @@
 
 <audio id="bgMusic" autoplay loop>
   <source src="a05451e7-1b21-4821-be26-5245695e0219.mp3" type="audio/mp3" />
-  Your browser does not support the audio element.
 </audio>
 
 <div class="container">
@@ -258,26 +256,30 @@
   </div>
 
   <div class="center-content">
-    <!-- New button placed ABOVE existing click here button -->
-    <button id="clickHere2Btn">🩷🩷🩷🩷🩷</button>
-    <button id="clickHereBtn">🎀</button>
+    <button id="clickHere2Btn">🤍🤍🤍🤍🤍</button>
+    <button id="clickHereBtn"></button>
   </div>
 
-  <!-- Hidden video outside the normal flow -->
   <video id="hiddenVideo" style="display:none;" controls>
-    <source src="fcded0b0-1f60-4bad-9b94-803d76f61231.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
+    <source src="snaptik_7218999084768627995.mp4" type="video/mp4" />
   </video>
 </div>
 
-<!-- Modal for zoomed images and video popup -->
 <div class="modal" id="modal">
   <span class="close" id="modalClose">&times;</span>
   <img id="modalImage" src="" alt="Zoomed Image" style="display:none;" />
   <video id="modalVideo" controls style="display:none;">
     <source src="snaptik_7218999084768627995.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
   </video>
+</div>
+
+<div id="confirmDialog" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color: rgba(0,0,0,0.7); z-index:1002; justify-content:center; align-items:center;">
+  <div style="background:white; padding: 3rem 2.5rem; border-radius: 16px; text-align:center; max-width: 360px; box-shadow: 0 6px 20px rgba(0,0,0,0.35); font-size: 1.25rem; color:#333;">
+    <p style="margin-bottom:2rem;">Do you love me?</p>
+    <div style="display: flex; justify-content: center;">
+      <button id="confirmYes" style="padding: 0.75rem 2rem; background-color:#fb1684; color:white; border:none; border-radius:12px; font-size: 1.15rem; cursor:pointer;">yes</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -286,6 +288,8 @@
   const modalVideo = document.getElementById('modalVideo');
   const modalClose = document.getElementById('modalClose');
   const lipbiteBtn = document.getElementById('lipbiteBtn');
+  const confirmDialog = document.getElementById('confirmDialog');
+  const confirmYes = document.getElementById('confirmYes');
   const bgMusic = document.getElementById('bgMusic');
   const video = document.getElementById('hiddenVideo');
   const clickHereBtn = document.getElementById('clickHereBtn');
@@ -293,7 +297,6 @@
 
   let lipbiteDisabled = false;
 
-  // Image click to open modal for images
   document.querySelectorAll('.photo-grid img').forEach(img => {
     img.addEventListener('click', (event) => {
       event.stopPropagation();
@@ -307,40 +310,30 @@
       lipbiteBtn.disabled = true;
       lipbiteDisabled = true;
 
-      // Mute hidden video (just in case)
       video.muted = true;
-
-      // Pause hidden video if playing
       if (!video.paused) {
         video.pause();
       }
 
-      // Only play bg music if paused
       if (bgMusic.paused) {
         bgMusic.play().catch(() => {});
       }
     });
   });
 
-  // Close modal function
   const closeModal = () => {
     modal.style.display = 'none';
     lipbiteBtn.classList.remove('dark');
     lipbiteBtn.disabled = false;
     lipbiteDisabled = false;
 
-    // Pause and reset modal video
-    if (!modalVideo.paused) {
-      modalVideo.pause();
-    }
+    if (!modalVideo.paused) modalVideo.pause();
     modalVideo.currentTime = 0;
     modalVideo.style.display = 'none';
 
-    // Reset modal image display
     modalImage.style.display = 'none';
     modalImage.src = '';
 
-    // Resume bg music if it was paused (and no video playing)
     if (bgMusic.paused) {
       bgMusic.play().catch(() => {});
     }
@@ -355,47 +348,50 @@
 
   lipbiteBtn.addEventListener('click', () => {
     if (!lipbiteDisabled) {
-      window.location.href = 'nextpage1.html';
+      window.location.href = 'nextpageee.html';
     }
   });
 
-  // Updated Click Here button: navigate directly without confirmation
   clickHereBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    window.location.href = 'index.html';
+    confirmDialog.style.display = 'flex';
+    if (!bgMusic.paused) bgMusic.pause();
+    if (!video.paused) {
+      video.pause();
+      video.setAttribute('data-paused-by-clickhere', 'true');
+    }
   });
 
-  // New: Click Here2 button to show video in modal
+  confirmYes.addEventListener('click', () => {
+    window.location.href = 'nextpage1.html';
+  });
+
   clickHere2Btn.addEventListener('click', () => {
-    // Show modal with video
     modal.style.display = 'flex';
     modalVideo.style.display = 'block';
     modalImage.style.display = 'none';
 
-    // Play modal video
-    modalVideo.play().catch(() => {});
+    lipbiteBtn.classList.add('dark');
+    lipbiteBtn.disabled = true;
+    lipbiteDisabled = true;
 
-    // Pause bg music while video plays
     if (!bgMusic.paused) {
       bgMusic.pause();
     }
 
-    // Mute hidden video and pause it
-    video.muted = true;
-    if (!video.paused) {
-      video.pause();
-    }
-
-    // Disable lipbite button while modal open
-    lipbiteBtn.classList.add('dark');
-    lipbiteBtn.disabled = true;
-    lipbiteDisabled = true;
+    modalVideo.currentTime = 0;
+    modalVideo.play().catch(() => {});
+    modalVideo.onended = () => {
+      closeModal();
+    };
   });
 
-  // When modal video ends, close modal and resume bg music
-  modalVideo.addEventListener('ended', () => {
-    closeModal();
+  modalClose.addEventListener('click', () => {
+    if (!modalVideo.paused) {
+      modalVideo.pause();
+    }
   });
 </script>
+
 </body>
 </html>
