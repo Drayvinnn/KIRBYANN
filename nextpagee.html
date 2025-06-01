@@ -177,20 +177,22 @@
       background-color: #e21576;
     }
 
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(1, 1, 1, 1);
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      padding: 1rem;
-    }
+   .modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(1, 1, 1, 0.95); /* Slightly more elegant dark */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
 
     .modal img, .modal video {
       max-width: 95vw;
