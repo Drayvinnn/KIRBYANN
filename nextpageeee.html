@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Monthsary Message</title>
+  <title>Monthsary Message with 9 Pictures</title>
   <style>
-    body {
+     body {
       font-family: Arial, sans-serif;
       background: #f8e1e7;
       display: flex;
@@ -13,6 +13,38 @@
       padding: 2rem;
       min-height: 100vh;
       margin: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .message-box {
+      position: relative;
+      background: #fb1684;
+      color: white;
+      padding: 2rem 3rem 4rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(245, 100, 169);
+      margin-bottom: 2rem;
+      overflow: visible;
+      text-align: center;
+    }
+
+    .message-box h1 {
+      margin: 0 0 1rem 0;
+      font-size: 2.5rem;
+      font-weight: bold;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      color: white;
+      flex-direction: row-reverse;
     }
 
     .lipbite-icon {
@@ -44,33 +76,12 @@
       pointer-events: none;
     }
 
-    .container {
-      max-width: 900px;
-      width: 100%;
-      text-align: center;
-      position: relative;
-    }
-
-    .message-box {
-      background: #fb1684;
-      color: white;
-      padding: 2rem 3rem 4rem;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(245, 100, 169);
-      margin-bottom: 2rem;
-      position: relative;
-      text-align: center;
-    }
-
-    .message-box h1 {
-      margin: 0 0 1rem 0;
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
-
     .message-box p {
+      margin-top: 0;
       font-size: 1.25rem;
       line-height: 1.4;
+      position: relative;
+      z-index: 2;
     }
 
     .flower-container {
@@ -87,9 +98,11 @@
     }
 
     .flower {
+      position: relative;
       font-size: 1.8rem;
       opacity: 0.8;
       animation: float 6s infinite ease-in-out;
+      pointer-events: none;
     }
 
     .flower:nth-child(1) { animation-delay: 0s; }
@@ -106,22 +119,22 @@
     }
 
     .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
       gap: 15px;
       margin-bottom: 2rem;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-      cursor: pointer;
     }
 
     .photo-grid img {
       width: 100%;
+      max-width: 280px;
+      height: auto;
       border-radius: 10px;
-      box-shadow: 0 2px 80x rgba(0, 0, 0, 0);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
       object-fit: cover;
       aspect-ratio: 1 / 1;
+      cursor: pointer;
       transition: transform 0.3s ease;
     }
 
@@ -130,37 +143,65 @@
       box-shadow: 0 4px 15px rgba(245, 100, 169);
     }
 
-    .video-section {
+    .center-content {
+      text-align: center;
       display: flex;
-      justify-content: center;
-      margin-top: 2rem;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
     }
 
-    .video-section video {
-      width: 100%;
-      max-width: 480px;
+    .center-content img {
+      max-width: 100%;
+      width: 300px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      margin-bottom: 1rem;
     }
 
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(0, 0, 0, 0.95);
-      justify-content: center;
-      align-items: center;
+    .center-content button {
+      padding: 0.75rem 2rem;
+      font-size: 1.25rem;
+      min-width: 200px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
     }
 
-    .modal img {
+    .center-content button:hover {
+      background-color: #e21576;
+    }
+
+   .modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(1, 1, 1, 0.95); /* Slightly more elegant dark */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+
+    .modal img, .modal video {
       max-width: 95vw;
-      max-height: 95vh;
+      max-height: 85vh;
       border-radius: 10px;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+      transform: scale(1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      background: black;
     }
 
     .modal .close {
@@ -170,169 +211,191 @@
       font-size: 4rem;
       color: white;
       cursor: pointer;
+      font-weight: bold;
+      background: transparent;
+      padding: 0;
+      user-select: none;
+      z-index: 1010;
     }
 
-    @media (max-width: 900px) {
-      .photo-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
+    .modal .close:hover {
+      color: #f564a9;
     }
 
     @media (max-width: 600px) {
       .photo-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .video-section video {
-        max-width: 100%;
+        justify-content: center;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <div class="message-box">
-      <h1>Happy Monthsary!</h1>
-      <p>Hi, my love. I love you to the moon and back—and beyond</p>
-      <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
+<audio id="bgMusic" autoplay loop>
+  <source src="a05451e7-1b21-4821-be26-5245695e0219.mp3" type="audio/mp3" />
+  Your browser does not support the audio element.
+</audio>
 
-      <div class="flower-container">
-        <span class="flower">🌸</span>
-        <span class="flower">🌼</span>
-        <span class="flower">🌺</span>
-        <span class="flower">🌻</span>
-        <span class="flower">🌷</span>
-        <span class="flower">💐</span>
-      </div>
+<div class="container">
+  <div class="message-box">
+    <h1>Happy Monthsary!</h1>
+    <p>Hi, my love. I love you to the moon and back—and beyond</p>
+    <div class="flower-container">
+      <span class="flower">🌸</span>
+      <span class="flower">🌼</span>
+      <span class="flower">🌺</span>
+      <span class="flower">🌻</span>
+      <span class="flower">🌷</span>
+      <span class="flower">💐</span>
     </div>
-
-    <div class="photo-grid">
-      <img src="133625d3-a1a6-475e-9997-584a8fcaa320.jpg" alt="1" />
-      <img src="666ba264-1574-4fa3-80ce-84d43b8ea65f.jpg" alt="2" />
-      <img src="58f695ee-ee76-48b5-8ce3-fcd84132b4cb.jpg" alt="3" />
-    </div>
-
-    <div class="video-section">
-      <div>
-        <video controls id="myVideo" playsinline>
-          <source src="snaptik_7218999084768627995.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <div style="margin-top: 1rem; text-align: center;">
-          <button id="clickHereBtn" style="padding: 2rem; font-size: 2rem; border-radius: 8px; background-color: #fff; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); border: none; outline: none;">
-            🎀
-          </button>
-        </div>
-      </div>
-    </div>
+    <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
   </div>
 
-  <audio id="bgMusic" src="a05451e7-1b21-4821-be26-5245695e0219.mp3" autoplay muted loop></audio>
-
-  <div class="modal" id="modal">
-    <span class="close" id="modalClose">&times;</span>
-    <img id="modalImage" src="" alt="Zoomed Image" />
+  <div class="photo-grid">
+    <img src="133625d3-a1a6-475e-9997-584a8fcaa320.jpg" alt="Pic 1" />
+    <img src="666ba264-1574-4fa3-80ce-84d43b8ea65f.jpg" alt="Pic 2" />
+    <img src="58f695ee-ee76-48b5-8ce3-fcd84132b4cb.jpg" alt="Pic 3" />
   </div>
 
-  <script>
-    const modal = document.getElementById('modal');
-    const modalImage = document.getElementById('modalImage');
-    const modalClose = document.getElementById('modalClose');
-    const lipbiteBtn = document.getElementById('lipbiteBtn');
-    const video = document.getElementById('myVideo');
-    const bgMusic = document.getElementById('bgMusic');
-    const clickHereBtn = document.getElementById('clickHereBtn');
+  <div class="center-content">
+    <!-- New button placed ABOVE existing click here button -->
+    <button id="clickHere2Btn">🩷🩷🩷🩷🩷</button>
+    <button id="clickHereBtn">🎀</button>
+  </div>
 
-    let lipbiteDisabled = false;
-    let videoIsPlaying = false;
-    let musicActivatedOnce = false;
+  <!-- Hidden video outside the normal flow -->
+  <video id="hiddenVideo" style="display:none;" controls>
+    <source src="fcded0b0-1f60-4bad-9b94-803d76f61231.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+</div>
 
-    document.querySelectorAll('.photo-grid img').forEach(img => {
-      img.addEventListener('click', (event) => {
-        event.stopPropagation();
-        modal.style.display = 'flex';
-        modalImage.src = img.src;
+<!-- Modal for zoomed images and video popup -->
+<div class="modal" id="modal">
+  <span class="close" id="modalClose">&times;</span>
+  <img id="modalImage" src="" alt="Zoomed Image" style="display:none;" />
+  <video id="modalVideo" controls style="display:none;">
+    <source src="snaptik_7218999084768627995.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+</div>
 
-        // Play music on image click
-        bgMusic.muted = false;
+<script>
+  const modal = document.getElementById('modal');
+  const modalImage = document.getElementById('modalImage');
+  const modalVideo = document.getElementById('modalVideo');
+  const modalClose = document.getElementById('modalClose');
+  const lipbiteBtn = document.getElementById('lipbiteBtn');
+  const bgMusic = document.getElementById('bgMusic');
+  const video = document.getElementById('hiddenVideo');
+  const clickHereBtn = document.getElementById('clickHereBtn');
+  const clickHere2Btn = document.getElementById('clickHere2Btn');
+
+  let lipbiteDisabled = false;
+
+  // Image click to open modal for images
+  document.querySelectorAll('.photo-grid img').forEach(img => {
+    img.addEventListener('click', (event) => {
+      event.stopPropagation();
+      modal.style.display = 'flex';
+      modalImage.style.display = 'block';
+      modalVideo.style.display = 'none';
+
+      modalImage.src = img.src;
+      modalImage.alt = img.alt;
+      lipbiteBtn.classList.add('dark');
+      lipbiteBtn.disabled = true;
+      lipbiteDisabled = true;
+
+      // Mute hidden video (just in case)
+      video.muted = true;
+
+      // Pause hidden video if playing
+      if (!video.paused) {
+        video.pause();
+      }
+
+      // Only play bg music if paused
+      if (bgMusic.paused) {
         bgMusic.play().catch(() => {});
-        musicActivatedOnce = true;
-
-        lipbiteBtn.classList.add('dark');
-        lipbiteBtn.disabled = true;
-        lipbiteDisabled = true;
-      });
-    });
-
-    modalClose.addEventListener('click', () => {
-      modal.style.display = 'none';
-      lipbiteBtn.classList.remove('dark');
-      lipbiteBtn.disabled = false;
-      lipbiteDisabled = false;
-    });
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal || e.target === modalImage) {
-        modal.style.display = 'none';
-        lipbiteBtn.classList.remove('dark');
-        lipbiteBtn.disabled = false;
-        lipbiteDisabled = false;
       }
     });
+  });
 
-    lipbiteBtn.addEventListener('click', () => {
-      if (!lipbiteDisabled) {
-        window.location.href = 'nextpage1.html';
-      }
-    });
+  // Close modal function
+  const closeModal = () => {
+    modal.style.display = 'none';
+    lipbiteBtn.classList.remove('dark');
+    lipbiteBtn.disabled = false;
+    lipbiteDisabled = false;
 
-    clickHereBtn.addEventListener('click', () => {
-      window.location.href = 'index.html';
-    });
+    // Pause and reset modal video
+    if (!modalVideo.paused) {
+      modalVideo.pause();
+    }
+    modalVideo.currentTime = 0;
+    modalVideo.style.display = 'none';
 
-    video.addEventListener('play', () => {
-      videoIsPlaying = true;
+    // Reset modal image display
+    modalImage.style.display = 'none';
+    modalImage.src = '';
+
+    // Resume bg music if it was paused (and no video playing)
+    if (bgMusic.paused) {
+      bgMusic.play().catch(() => {});
+    }
+  };
+
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal || e.target === modalImage || e.target === modalVideo) {
+      closeModal();
+    }
+  });
+
+  lipbiteBtn.addEventListener('click', () => {
+    if (!lipbiteDisabled) {
+      window.location.href = 'nextpage1.html';
+    }
+  });
+
+  // Updated Click Here button: navigate directly without confirmation
+  clickHereBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'index.html';
+  });
+
+  // New: Click Here2 button to show video in modal
+  clickHere2Btn.addEventListener('click', () => {
+    // Show modal with video
+    modal.style.display = 'flex';
+    modalVideo.style.display = 'block';
+    modalImage.style.display = 'none';
+
+    // Play modal video
+    modalVideo.play().catch(() => {});
+
+    // Pause bg music while video plays
+    if (!bgMusic.paused) {
       bgMusic.pause();
-      if (video.requestFullscreen) {
-        video.requestFullscreen();
-      } else if (video.webkitRequestFullscreen) {
-        video.webkitRequestFullscreen();
-      } else if (video.msRequestFullscreen) {
-        video.msRequestFullscreen();
-      }
-    });
-
-    function playBackgroundMusic() {
-      if (!bgMusic.muted) {
-        bgMusic.play().catch(() => {});
-      } else {
-        bgMusic.muted = false;
-        bgMusic.play().catch(() => {});
-      }
-      videoIsPlaying = false;
     }
 
-    video.addEventListener('pause', () => {
-      playBackgroundMusic();
-    });
-
-    video.addEventListener('ended', () => {
-      playBackgroundMusic();
-    });
-
-    function startMusicOnUserInteraction() {
-      if (!musicActivatedOnce && !videoIsPlaying) {
-        bgMusic.muted = false;
-        bgMusic.play().catch(() => {});
-        musicActivatedOnce = true;
-      }
-      window.removeEventListener('click', startMusicOnUserInteraction);
-      window.removeEventListener('touchstart', startMusicOnUserInteraction);
+    // Mute hidden video and pause it
+    video.muted = true;
+    if (!video.paused) {
+      video.pause();
     }
 
-    window.addEventListener('click', startMusicOnUserInteraction);
-    window.addEventListener('touchstart', startMusicOnUserInteraction);
-  </script>
+    // Disable lipbite button while modal open
+    lipbiteBtn.classList.add('dark');
+    lipbiteBtn.disabled = true;
+    lipbiteDisabled = true;
+  });
+
+  // When modal video ends, close modal and resume bg music
+  modalVideo.addEventListener('ended', () => {
+    closeModal();
+  });
+</script>
 </body>
 </html>
