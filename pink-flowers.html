@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="pink-flowers.css" />
+    <title>Pink Flowers</title>
+    <style>
+      /* Inline styles for the X button */
+      #close-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        background: transparent;
+        border: none;
+        font-size: 3.5rem; /* Increased size */
+        font-weight: bold;
+        color: white;
+        cursor: not-allowed; /* Start as disabled */
+        user-select: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+      }
+      #close-btn:disabled {
+        color: rgba(255, 255, 255, 0.5);
+        cursor: not-allowed;
+      }
+      #close-btn:not(:disabled) {
+        cursor: pointer;
+      }
+
+      /* Back button styles */
+      #back-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 9999;
+        background: transparent;
+        border: none;
+        font-size: 3.5rem; /* Increased size */
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        user-select: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+      }
+      #back-btn:hover {
+        color: #ffb6c1; /* Optional hover effect */
+      }
+
+      /* Notification style */
+      #notify {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 192, 203, 0.85);
+        color: #fff;
+        font-size: 2rem;
+        font-weight: bold;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(255, 192, 203, 0.7);
+        z-index: 10000;
+        user-select: none;
+        transition: opacity 0.5s ease;
+      }
+    </style>
+  </head>
+
+  <body class="not-loaded">
+    <!-- Notification -->
+    <div id="notify">TAP THE SCREEN</div>
+
+    <div class="night"></div>
+    <div class="flowers">
+      <div class="flower flower--1">
+        <div class="flower__leafs flower__leafs--1">
+          <div class="flower__leaf flower__leaf--1"></div>
+          <div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div>
+          <div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__white-circle"></div>
+
+          <div class="flower__light flower__light--1"></div>
+          <div class="flower__light flower__light--2"></div>
+          <div class="flower__light flower__light--3"></div>
+          <div class="flower__light flower__light--4"></div>
+          <div class="flower__light flower__light--5"></div>
+          <div class="flower__light flower__light--6"></div>
+          <div class="flower__light flower__light--7"></div>
+          <div class="flower__light flower__light--8"></div>
+        </div>
+        <div class="flower__line">
+          <div class="flower__line__leaf flower__line__leaf--1"></div>
+          <div class="flower__line__leaf flower__line__leaf--2"></div>
+          <div class="flower__line__leaf flower__line__leaf--3"></div>
+          <div class="flower__line__leaf flower__line__leaf--4"></div>
+          <div class="flower__line__leaf flower__line__leaf--5"></div>
+          <div class="flower__line__leaf flower__line__leaf--6"></div>
+        </div>
+      </div>
+
+      <div class="flower flower--2">
+        <div class="flower__leafs flower__leafs--2">
+          <div class="flower__leaf flower__leaf--1"></div>
+          <div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div>
+          <div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__white-circle"></div>
+
+          <div class="flower__light flower__light--1"></div>
+          <div class="flower__light flower__light--2"></div>
+          <div class="flower__light flower__light--3"></div>
+          <div class="flower__light flower__light--4"></div>
+          <div class="flower__light flower__light--5"></div>
+          <div class="flower__light flower__light--6"></div>
+          <div class="flower__light flower__light--7"></div>
+          <div class="flower__light flower__light--8"></div>
+        </div>
+        <div class="flower__line">
+          <div class="flower__line__leaf flower__line__leaf--1"></div>
+          <div class="flower__line__leaf flower__line__leaf--2"></div>
+          <div class="flower__line__leaf flower__line__leaf--3"></div>
+          <div class="flower__line__leaf flower__line__leaf--4"></div>
+        </div>
+      </div>
+
+      <div class="flower flower--3">
+        <div class="flower__leafs flower__leafs--3">
+          <div class="flower__leaf flower__leaf--1"></div>
+          <div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div>
+          <div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__white-circle"></div>
+
+          <div class="flower__light flower__light--1"></div>
+          <div class="flower__light flower__light--2"></div>
+          <div class="flower__light flower__light--3"></div>
+          <div class="flower__light flower__light--4"></div>
+          <div class="flower__light flower__light--5"></div>
+          <div class="flower__light flower__light--6"></div>
+          <div class="flower__light flower__light--7"></div>
+          <div class="flower__light flower__light--8"></div>
+        </div>
+        <div class="flower__line">
+          <div class="flower__line__leaf flower__line__leaf--1"></div>
+          <div class="flower__line__leaf flower__line__leaf--2"></div>
+          <div class="flower__line__leaf flower__line__leaf--3"></div>
+          <div class="flower__line__leaf flower__line__leaf--4"></div>
+        </div>
+      </div>
+
+      <div class="grow-ans" style="--d: 1.2s">
+        <div class="flower__g-long">
+          <div class="flower__g-long__top"></div>
+          <div class="flower__g-long__bottom"></div>
+        </div>
+      </div>
+
+      <div class="growing-grass">
+        <div class="flower__grass flower__grass--1">
+          <div class="flower__grass--top"></div>
+          <div class="flower__grass--bottom"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--1"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--2"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--3"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--4"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--5"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--6"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--7"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--8"></div>
+          <div class="flower__grass__overlay"></div>
+        </div>
+      </div>
+
+      <div class="growing-grass">
+        <div class="flower__grass flower__grass--2">
+          <div class="flower__grass--top"></div>
+          <div class="flower__grass--bottom"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--1"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--2"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--3"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--4"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--5"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--6"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--7"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--8"></div>
+          <div class="flower__grass__overlay"></div>
+        </div>
+      </div>
+
+      <div class="grow-ans" style="--d: 2.4s">
+        <div class="flower__g-right flower__g-right--1">
+          <div class="leaf"></div>
+        </div>
+      </div>
+
+      <div class="grow-ans" style="--d: 2.8s">
+        <div class="flower__g-right flower__g-right--2">
+          <div class="leaf"></div>
+        </div>
+      </div>
+
+      <div class="grow-ans" style="--d: 2.8s">
+        <div class="flower__g-front">
+          <div
+            class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--1">
+            <div class="flower__g-front__leaf"></div>
+          </div>
+          <div
+            class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--2">
+            <div class="flower__g-front__leaf"></div>
+          </div>
+          <div
+            class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--3">
+            <div class="flower__g-front__leaf"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grow-ans" style="--d: 1.6s">
+        <div class="flower__g-left">
+          <div class="leaf"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <button id="back-btn" title="Go Back">←</button>
+
+    <!-- X Button -->
+    <button id="close-btn" disabled>×</button>
+
+    <!-- Background music -->
+    <audio id="bg-music" loop>
+      <source src="4aeea2ab-a94d-46ac-9f51-06ca9b4fbc5e.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+      const audio = document.getElementById("bg-music");
+      const closeBtn = document.getElementById("close-btn");
+      const backBtn = document.getElementById("back-btn");
+      const notify = document.getElementById("notify");
+
+      closeBtn.disabled = true;
+      closeBtn.style.cursor = "not-allowed";
+
+      function startAnimationAndMusic() {
+        document.body.classList.remove("not-loaded");
+        audio.play().catch(() => {
+          console.log("Autoplay prevented, user interaction required.");
+        });
+
+        if (notify) {
+          notify.style.opacity = "0";
+          setTimeout(() => {
+            notify.style.display = "none";
+          }, 500);
+        }
+
+        closeBtn.disabled = false;
+        closeBtn.style.cursor = "pointer";
+
+        window.removeEventListener("click", startAnimationAndMusic);
+        window.removeEventListener("touchstart", startAnimationAndMusic);
+      }
+
+      window.addEventListener("click", (e) => {
+        if (e.target !== closeBtn && e.target !== backBtn) {
+          startAnimationAndMusic();
+        }
+      });
+      window.addEventListener("touchstart", (e) => {
+        if (e.target !== closeBtn && e.target !== backBtn) {
+          startAnimationAndMusic();
+        }
+      });
+
+      closeBtn.addEventListener("click", () => {
+        if (!closeBtn.disabled) {
+          window.location.href = "index.html";
+        }
+      });
+
+      backBtn.addEventListener("click", () => {
+        window.history.back();
+      });
+    </script>
+  </body>
+</html>
