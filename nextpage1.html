@@ -223,9 +223,6 @@
     </div>
   </div>
 
-  <!-- Background music audio element -->
-  <audio id="bgMusic" src="tiktokio.com_r0KOTKwFW7ANKnFcMqQ6.mp3" loop autoplay muted></audio>
-
   <!-- Modal for Zoomed Image -->
   <div class="modal" id="modal">
     <span class="close" id="modalClose">&times;</span>
@@ -238,7 +235,6 @@
     const modalClose = document.getElementById('modalClose');
     const lipbiteBtn = document.getElementById('lipbiteBtn');
     const clickHereBtn = document.getElementById('clickHereBtn');
-    const bgMusic = document.getElementById('bgMusic');
     const video = document.getElementById('videoPlayer');
     let lipbiteDisabled = false;
 
@@ -279,29 +275,8 @@
       window.location.href = 'nextpageeee.html';
     });
 
-    // Start background music after user interaction
-    function startMusic() {
-      if (bgMusic.paused) {
-        bgMusic.play().then(() => {
-          bgMusic.muted = false;
-        }).catch(() => {});
-      } else {
-        bgMusic.muted = false;
-      }
-      window.removeEventListener('click', startMusic);
-      window.removeEventListener('touchstart', startMusic);
-    }
-
-    window.addEventListener('click', startMusic);
-    window.addEventListener('touchstart', startMusic);
-
-    // Pause background music when video plays
+    // Optional: Fullscreen video on play
     video.addEventListener('play', () => {
-      if (!bgMusic.paused) {
-        bgMusic.pause();
-      }
-
-      // Optional fullscreen
       if (video.requestFullscreen) {
         video.requestFullscreen();
       } else if (video.webkitRequestFullscreen) {
@@ -309,12 +284,6 @@
       } else if (video.msRequestFullscreen) {
         video.msRequestFullscreen();
       }
-    });
-
-    // Resume background music when video pauses
-    video.addEventListener('pause', () => {
-      bgMusic.muted = false;
-      bgMusic.play().catch(() => {});
     });
   </script>
 </body>

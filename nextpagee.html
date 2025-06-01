@@ -148,6 +148,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
     }
 
     .center-content img {
@@ -186,15 +188,18 @@
       background-color: rgba(1, 1, 1, 1);
       justify-content: center;
       align-items: center;
+      flex-direction: column;
+      padding: 1rem;
     }
 
-    .modal img {
+    .modal img, .modal video {
       max-width: 95vw;
-      max-height: 95vh;
+      max-height: 85vh;
       border-radius: 10px;
       transform: scale(1.05);
       transition: transform 0.3s ease;
       cursor: pointer;
+      background: black;
     }
 
     .modal .close {
@@ -207,6 +212,8 @@
       font-weight: bold;
       background: transparent;
       padding: 0;
+      user-select: none;
+      z-index: 1010;
     }
 
     .modal .close:hover {
@@ -254,22 +261,27 @@
     <img src="b37ffb6e-f535-45c3-bb59-24dfe89204f1.jpg" alt="Pic 9" />
   </div>
 
-  <div class="video-section">
-    <video controls>
-      <source src="fcded0b0-1f60-4bad-9b94-803d76f61231.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-
-    <div class="center-content">
-      <img src="" alt="" />
-      <button id="clickHereBtn">Click Here</button>
-    </div>
+  <div class="center-content">
+    <!-- New button placed ABOVE existing click here button -->
+    <button id="clickHere2Btn">🤍🤍🤍🤍🤍</button>
+    <button id="clickHereBtn">Click Here</button>
   </div>
+
+  <!-- Hidden video outside the normal flow -->
+  <video id="hiddenVideo" style="display:none;" controls>
+    <source src="fcded0b0-1f60-4bad-9b94-803d76f61231.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
 </div>
 
+<!-- Modal for zoomed images and video popup -->
 <div class="modal" id="modal">
   <span class="close" id="modalClose">&times;</span>
-  <img id="modalImage" src="" alt="Zoomed Image" />
+  <img id="modalImage" src="" alt="Zoomed Image" style="display:none;" />
+  <video id="modalVideo" controls style="display:none;">
+    <source src="fcded0b0-1f60-4bad-9b94-803d76f61231.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
 </div>
 
 <div id="confirmDialog" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color: rgba(0,0,0,0.7); z-index:1002; justify-content:center; align-items:center;">
@@ -285,38 +297,45 @@
 <script>
   const modal = document.getElementById('modal');
   const modalImage = document.getElementById('modalImage');
+  const modalVideo = document.getElementById('modalVideo');
   const modalClose = document.getElementById('modalClose');
   const lipbiteBtn = document.getElementById('lipbiteBtn');
   const confirmDialog = document.getElementById('confirmDialog');
   const confirmYes = document.getElementById('confirmYes');
   const confirmNo = document.getElementById('confirmNo');
   const bgMusic = document.getElementById('bgMusic');
-  const video = document.querySelector('.video-section video');
+  const video = document.getElementById('hiddenVideo');
   const clickHereBtn = document.getElementById('clickHereBtn');
+  const clickHere2Btn = document.getElementById('clickHere2Btn');
 
   let lipbiteDisabled = false;
   let videoPlaying = false;
   let videoWasPlayingWhenModalOpened = false;
 
-  // Image click to open modal
+  // Image click to open modal for images
   document.querySelectorAll('.photo-grid img').forEach(img => {
     img.addEventListener('click', (event) => {
       event.stopPropagation();
       modal.style.display = 'flex';
+      modalImage.style.display = 'block';
+      modalVideo.style.display = 'none';
+
       modalImage.src = img.src;
       modalImage.alt = img.alt;
       lipbiteBtn.classList.add('dark');
       lipbiteBtn.disabled = true;
       lipbiteDisabled = true;
 
-      // Remember if video was playing before modal open
-      videoWasPlayingWhenModalOpened = !video.paused;
-
-      // Mute video while modal open
+      // Mute hidden video (just in case)
       video.muted = true;
 
-      // Only play bg music if video was NOT playing before
-      if (!videoWasPlayingWhenModalOpened && bgMusic.paused) {
+      // Pause hidden video if playing
+      if (!video.paused) {
+        video.pause();
+      }
+
+      // Only play bg music if paused
+      if (bgMusic.paused) {
         bgMusic.play().catch(() => {});
       }
     });
@@ -329,21 +348,26 @@
     lipbiteBtn.disabled = false;
     lipbiteDisabled = false;
 
-    // Unmute video
-    video.muted = false;
+    // Pause and reset modal video
+    if (!modalVideo.paused) {
+      modalVideo.pause();
+    }
+    modalVideo.currentTime = 0;
+    modalVideo.style.display = 'none';
 
-    // Resume bg music only if video was NOT playing before modal opened
-    if (!videoWasPlayingWhenModalOpened && bgMusic.paused) {
+    // Reset modal image display
+    modalImage.style.display = 'none';
+    modalImage.src = '';
+
+    // Resume bg music if it was paused (and no video playing)
+    if (bgMusic.paused) {
       bgMusic.play().catch(() => {});
     }
-
-    // Reset flag
-    videoWasPlayingWhenModalOpened = false;
   };
 
   modalClose.addEventListener('click', closeModal);
   modal.addEventListener('click', (e) => {
-    if (e.target === modal || e.target === modalImage) {
+    if (e.target === modal || e.target === modalImage || e.target === modalVideo) {
       closeModal();
     }
   });
@@ -386,22 +410,42 @@
     }
   });
 
-  // Track video play state and sync with bg music
-  video.addEventListener('play', () => {
-    videoPlaying = true;
+  // Hide the video from normal page layout
+  video.style.display = 'none';
+
+  // New: Click Here2 button to show video in modal
+  clickHere2Btn.addEventListener('click', () => {
+    // Show modal with video
+    modal.style.display = 'flex';
+    modalVideo.style.display = 'block';
+    modalImage.style.display = 'none';
+
+    lipbiteBtn.classList.add('dark');
+    lipbiteBtn.disabled = true;
+    lipbiteDisabled = true;
+
+    // Pause bg music while video plays
     if (!bgMusic.paused) {
       bgMusic.pause();
     }
+
+    // Start playing modal video
+    modalVideo.currentTime = 0;
+    modalVideo.play().catch(() => {});
+
+    // When modal video ends, close modal and resume bg music
+    modalVideo.onended = () => {
+      closeModal();
+    };
   });
 
-  video.addEventListener('pause', () => {
-    videoPlaying = false;
-
-    // Only resume bg music if modal not open
-    if (modal.style.display === 'none' && bgMusic.paused) {
-      bgMusic.play().catch(() => {});
+  // When modal closes, stop video playback
+  modalClose.addEventListener('click', () => {
+    if (!modalVideo.paused) {
+      modalVideo.pause();
     }
   });
 </script>
+
 </body>
 </html>

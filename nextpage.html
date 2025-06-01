@@ -143,57 +143,33 @@
 
     .video-section {
       display: flex;
-      justify-content: center;
-      margin-top: 2rem;
-    }
-
-    .video-section video {
-      width: 100%;
-      max-width: 480px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0);
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(1, 1, 1, 1);
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      margin-top: 2rem;
+      gap: 1rem;
     }
 
-    .modal img {
-      max-width: 95vw;
-      max-height: 95vh;
+    /* Hide original video on page */
+    #videoPlayer {
+      display: none;
+    }
+
+    /* Style for both buttons */
+    .btn-video-popup, .btn-original {
+      padding: 1rem 2rem;
+      font-size: 1.25rem;
+      border: none;
       border-radius: 10px;
-      box-shadow: 0 0 px rgba(0, 0, 0, 0);
-      transform: scale(1.05);
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
-
-    .modal .close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 4rem;
+      background-color: #fb1684;
       color: white;
       cursor: pointer;
-      font-weight: bold;
-      background: transparent;
-      padding: 0;
-      border-radius: 0;
-      transition: none;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
     }
 
-    .modal .close:hover {
-      color: #f564a9;
-      background: transparent;
+    .btn-video-popup:hover, .btn-original:hover {
+      background-color: #e21472;
     }
 
     @media (max-width: 900px) {
@@ -215,11 +191,97 @@
     audio {
       display: none;
     }
+
+    /* Modal for zoomed images */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(1, 1, 1, 1);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal img {
+      max-width: 95vw;
+      max-height: 95vh;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .modal .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 4rem;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      transition: none;
+      user-select: none;
+    }
+
+    .modal .close:hover {
+      color: #f564a9;
+      background: transparent;
+    }
+
+    /* Modal for video popup */
+    #videoModal {
+      display: none;
+      position: fixed;
+      z-index: 1100;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 1rem;
+    }
+
+    #videoModal video {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 10px;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
+    }
+
+    #videoModal .close-video {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 3rem;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      background: transparent;
+      padding: 0;
+      user-select: none;
+      transition: color 0.2s ease;
+      border: none;
+    }
+
+    #videoModal .close-video:hover {
+      color: #f564a9;
+    }
   </style>
 </head>
 <body>
 
-  <audio id="bgMusic" autoplay loop>
+  <audio id="bgMusic" loop>
     <source src="tiktokio.com_H5cpeo9K98HvXaAiLWbb.mp3" type="audio/mp3" />
     Your browser does not support the audio element.
   </audio>
@@ -256,47 +318,57 @@
     </div>
 
     <div class="video-section">
-      <div>
-        <video controls id="videoPlayer">
-          <source src="0531d0ae-8a84-4025-b5fd-37a60bbabd7e.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+      <!-- NEW BUTTON Click Here2 -->
+      <button class="btn-video-popup" id="btnClickHere2">🤍</button>
 
-        <div style="margin-top: 1rem; text-align: center;">
-          <button onclick="window.location.href='nextpagee.html'" 
-            style="
-              padding: 1rem 2rem;
-              font-size: 1.25rem;
-              border: none;
-              border-radius: 10px;
-              background-color: #fb1684;
-              color: white;
-              cursor: pointer;
-              box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-              transition: background-color 0.3s ease;
-            ">
-            Click Here
-          </button>
-        </div>
-      </div>
+      <!-- ORIGINAL BUTTON Click Here -->
+      <button class="btn-original" onclick="window.location.href='nextpagee.html'">Click Here</button>
+
+      <!-- Hidden video on page -->
+      <video controls id="videoPlayer">
+        <source src="0531d0ae-8a84-4025-b5fd-37a60bbabd7e.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
     </div>
   </div>
 
+  <!-- Modal for zoomed images -->
   <div class="modal" id="modal">
     <span class="close" id="modalClose">&times;</span>
     <img id="modalImage" src="" alt="Zoomed Image" />
   </div>
 
+  <!-- New Video Popup Modal -->
+  <div id="videoModal" class="modal" style="display:none; flex-direction: column;">
+    <button class="close-video" id="closeVideoBtn" aria-label="Close video">&times;</button>
+    <video controls autoplay id="popupVideo">
+      <source src="0531d0ae-8a84-4025-b5fd-37a60bbabd7e.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
   <script>
+    const lipbiteBtn = document.getElementById('lipbiteBtn');
+    const bgMusic = document.getElementById('bgMusic');
     const modal = document.getElementById('modal');
     const modalImage = document.getElementById('modalImage');
     const modalClose = document.getElementById('modalClose');
-    const lipbiteBtn = document.getElementById('lipbiteBtn');
-    const video = document.getElementById('videoPlayer');
-    const bgMusic = document.getElementById('bgMusic');
+    const videoPlayer = document.getElementById('videoPlayer');
+
+    const videoModal = document.getElementById('videoModal');
+    const closeVideoBtn = document.getElementById('closeVideoBtn');
+    const popupVideo = document.getElementById('popupVideo');
 
     let lipbiteDisabled = false;
 
+    // Lipbite button click - go to homepage (index.html)
+    lipbiteBtn.addEventListener('click', () => {
+      if (!lipbiteDisabled) {
+        window.location.href = 'index.html';
+      }
+    });
+
+    // Image modal open logic
     document.querySelectorAll('.photo-grid img').forEach(img => {
       img.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -306,50 +378,72 @@
         lipbiteBtn.classList.add('dark');
         lipbiteBtn.disabled = true;
         lipbiteDisabled = true;
+
+        // Play background music when image modal opens
+        bgMusic.play().catch(() => {
+          // catch error if autoplay blocked by browser
+        });
       });
     });
 
-    const closeModal = () => {
+    // Close image modal on close button click
+    modalClose.addEventListener('click', () => {
       modal.style.display = 'none';
+      modalImage.src = '';
       lipbiteBtn.classList.remove('dark');
       lipbiteBtn.disabled = false;
       lipbiteDisabled = false;
-    };
+    });
 
-    modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal || e.target === modalImage) {
-        closeModal();
+    // Close modal if clicking outside image
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+        modalImage.src = '';
+        lipbiteBtn.classList.remove('dark');
+        lipbiteBtn.disabled = false;
+        lipbiteDisabled = false;
       }
     });
 
-    lipbiteBtn.addEventListener('click', () => {
-      if (!lipbiteDisabled) {
-        window.location.href = 'index.html';
+    // New video popup button click
+    document.getElementById('btnClickHere2').addEventListener('click', () => {
+      videoModal.style.display = 'flex';
+      popupVideo.currentTime = 0;
+      popupVideo.play();
+
+      // Pause background music while video playing
+      if (!bgMusic.paused) {
+        bgMusic.pause();
       }
     });
 
-    // Pause background music when video plays, resume when paused or ended
-    video.addEventListener('play', () => {
-      bgMusic.pause().catch(() => {});
+    // Close video popup
+    closeVideoBtn.addEventListener('click', () => {
+      popupVideo.pause();
+      videoModal.style.display = 'none';
+
+      // Resume background music after video closes
+      bgMusic.play().catch(() => {
+        // catch error if autoplay blocked
+      });
     });
 
-    video.addEventListener('pause', () => {
-      if (video.ended) return;
-      bgMusic.play().catch(() => {});
+    // Also resume background music after video ends naturally
+    popupVideo.addEventListener('ended', () => {
+      videoModal.style.display = 'none';
+      bgMusic.play().catch(() => {
+        // catch error if autoplay blocked
+      });
     });
 
-    video.addEventListener('ended', () => {
-      bgMusic.play().catch(() => {});
+    // Attempt to start background music on page load
+    window.addEventListener('load', () => {
+      bgMusic.volume = 50;
+      bgMusic.play().catch(() => {
+        // Autoplay might be blocked until user interaction
+      });
     });
-
-    // Try to start background music on first user interaction if paused due to autoplay policy
-    document.addEventListener('click', () => {
-      if (bgMusic.paused && video.paused) {
-        bgMusic.play().catch(() => {});
-      }
-    }, { once: true });
   </script>
-
 </body>
 </html>
