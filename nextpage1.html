@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Monthsary Message with 12 Pictures</title>
+  <title>Monthsary Message with Love Letter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="love letter 2.css" />
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,6 +17,7 @@
       padding: 2rem;
       min-height: 100vh;
       margin: 0;
+      flex-direction: column;
     }
 
     .lipbite-icon {
@@ -49,6 +54,7 @@
       width: 100%;
       text-align: center;
       position: relative;
+      margin: 0 auto;
     }
 
     .message-box {
@@ -85,11 +91,9 @@
     }
 
     .flower {
-      position: relative;
       font-size: 1.8rem;
       opacity: 0.8;
       animation: float 6s infinite ease-in-out;
-      pointer-events: none;
     }
 
     .flower:nth-child(1) { animation-delay: 0s; }
@@ -109,6 +113,8 @@
       display: flex;
       justify-content: center;
       margin-top: 2rem;
+      flex-direction: column;
+      align-items: center;
     }
 
     .video-section video {
@@ -116,6 +122,15 @@
       max-width: 480px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .video-buttons {
+      margin-top: 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
     }
 
     .click-button {
@@ -127,12 +142,12 @@
       color: white;
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      transition: background-color 0.3s ease;
     }
 
     .click-button:hover {
       background-color: #e01375;
-      transform: scale(1.05);
+      transform: none; /* animation removed here */
     }
 
     .modal {
@@ -175,30 +190,32 @@
       color: #f564a9;
     }
 
-    @media (max-width: 900px) {
-      .photo-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
+    .reset {
+      text-align: center;
+      margin: 1.5rem 0;
     }
 
-    @media (max-width: 600px) {
-      .photo-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .reset button {
+      background-color: #fb1684;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin: 0 0.5rem;
+    }
 
-      .video-section video {
-        max-width: 100%;
-      }
+    .reset button:hover {
+      background-color: #e01375;
     }
   </style>
 </head>
 <body>
-
   <div class="container">
     <div class="message-box">
       <h1>Happy Monthsary!</h1>
       <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
-
       <div class="flower-container">
         <span class="flower">🌸</span>
         <span class="flower">🌼</span>
@@ -209,25 +226,58 @@
       </div>
     </div>
 
-    <div class="video-section">
-      <div>
-        <video id="videoPlayer" controls>
-          <source src="snaptik_7400391034791922987.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-
-        <div style="margin-top: 1rem; text-align: center;">
-          <button id="clickHereBtn" class="click-button">Click Here</button>
+    <div class="envlope-wrapper">
+      <div id="envelope" class="close">
+        <div class="front flap"></div>
+        <div class="front pocket"></div>
+        <div class="letter">
+          <div class="words line1">To: Love</div>
+          <div class="words line2">Dear Love, You’re so beautiful</div>
+          <div class="words line3">that every time i see you</div>
+          <div class="words line4">iloveyousomuch,</div>
         </div>
+        <div class="hearts">
+          <div class="heart a1"></div>
+          <div class="heart a2"></div>
+          <div class="heart a3"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reset">
+      <button id="open">Open</button>
+      <button id="reset">Close</button>
+    </div>
+
+    <div class="video-section">
+      <video id="videoPlayer" controls style="display:none;">
+        <source src="snaptik_7400391034791922987.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="video-buttons">
+        <button id="popUpVideoBtn" class="click-button">😝</button>
+        <button id="clickHereBtn" class="click-button">Click Here</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal for Zoomed Image -->
   <div class="modal" id="modal">
     <span class="close" id="modalClose">&times;</span>
     <img id="modalImage" src="" alt="Zoomed Image" />
   </div>
+
+  <div class="modal" id="videoModal" style="background-color: rgba(0,0,0,0.9);">
+    <span class="close" id="videoModalClose">&times;</span>
+    <video id="popupVideoPlayer" controls style="max-width: 90vw; max-height: 80vh; border-radius: 10px;">
+      <source src="snaptik_7400391034791922987.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <audio id="bgMusic" loop preload="auto">
+    <source src="444be348-ca3a-4a8a-8fc0-5567c49b6d23.mp3" type="audio/mp3" />
+    Your browser does not support the audio element.
+  </audio>
 
   <script>
     const modal = document.getElementById('modal');
@@ -236,55 +286,76 @@
     const lipbiteBtn = document.getElementById('lipbiteBtn');
     const clickHereBtn = document.getElementById('clickHereBtn');
     const video = document.getElementById('videoPlayer');
+    const envelope = document.getElementById('envelope');
+    const openBtn = document.getElementById('open');
+    const resetBtn = document.getElementById('reset');
+    const bgMusic = document.getElementById('bgMusic');
     let lipbiteDisabled = false;
 
-    // Modal logic (if photo grid is added)
-    document.querySelectorAll('.photo-grid img')?.forEach(img => {
-      img.addEventListener('click', (event) => {
-        event.stopPropagation();
-        modal.style.display = 'flex';
-        modalImage.src = img.src;
-        modalImage.alt = img.alt;
-        lipbiteBtn.classList.add('dark');
-        lipbiteBtn.disabled = true;
-        lipbiteDisabled = true;
-      });
+    const videoModal = document.getElementById('videoModal');
+    const videoModalClose = document.getElementById('videoModalClose');
+    const popUpVideoBtn = document.getElementById('popUpVideoBtn');
+    const popupVideoPlayer = document.getElementById('popupVideoPlayer');
+
+    // Open envelope
+    openBtn.addEventListener('click', () => {
+      envelope.classList.remove('close');
+      envelope.classList.add('open');
+      bgMusic.play().catch(() => {});
     });
 
-    const closeModal = () => {
-      modal.style.display = 'none';
-      lipbiteBtn.classList.remove('dark');
-      lipbiteBtn.disabled = false;
-      lipbiteDisabled = false;
-    };
-
-    modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal || e.target === modalImage) {
-        closeModal();
-      }
+    // Close envelope
+    resetBtn.addEventListener('click', () => {
+      envelope.classList.remove('open');
+      envelope.classList.add('close');
+      bgMusic.pause();
+      bgMusic.currentTime = 0;
     });
 
+    // Lipbite button navigation, disabled when modal open
     lipbiteBtn.addEventListener('click', () => {
       if (!lipbiteDisabled) {
         window.location.href = 'nextpageeee.html';
       }
     });
 
+    // Click Here button navigates to pink-flowers.html
     clickHereBtn.addEventListener('click', () => {
       window.location.href = 'pink-flowers.html';
     });
 
-    // Optional: Fullscreen video on play
-    video.addEventListener('play', () => {
-      if (video.requestFullscreen) {
-        video.requestFullscreen();
-      } else if (video.webkitRequestFullscreen) {
-        video.webkitRequestFullscreen();
-      } else if (video.msRequestFullscreen) {
-        video.msRequestFullscreen();
+    // Pop up video modal open
+    popUpVideoBtn.addEventListener('click', () => {
+      videoModal.style.display = 'flex';
+      popupVideoPlayer.currentTime = 0;
+      popupVideoPlayer.play().catch(err => console.error("Popup video play failed:", err));
+      if (!bgMusic.paused) {
+        bgMusic.pause();
       }
     });
+
+    // Close video modal
+    videoModalClose.addEventListener('click', () => {
+      popupVideoPlayer.pause();
+      videoModal.style.display = 'none';
+      if (envelope.classList.contains('open')) {
+        bgMusic.play().catch(() => {});
+      }
+    });
+
+    videoModal.addEventListener('click', (e) => {
+      if (e.target === videoModal) {
+        popupVideoPlayer.pause();
+        videoModal.style.display = 'none';
+        if (envelope.classList.contains('open')) {
+          bgMusic.play().catch(() => {});
+        }
+      }
+    });
+
+    // Modal zoom image functionality is not included here,
+    // add if you want image grid click to open modal
+
   </script>
 </body>
 </html>
