@@ -214,9 +214,8 @@
   <div class="container">
     <h1 class="main-title">Happy Monthsary!</h1>
 
-      
-      <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
-   
+    <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
+
     <div class="envlope-wrapper">
       <div id="envelope" class="close">
         <div class="front flap"></div>
@@ -281,12 +280,12 @@
     const openBtn = document.getElementById('open');
     const resetBtn = document.getElementById('reset');
     const bgMusic = document.getElementById('bgMusic');
-    let lipbiteDisabled = false;
-
     const videoModal = document.getElementById('videoModal');
     const videoModalClose = document.getElementById('videoModalClose');
     const popUpVideoBtn = document.getElementById('popUpVideoBtn');
     const popupVideoPlayer = document.getElementById('popupVideoPlayer');
+
+    let lipbiteDisabled = false;
 
     openBtn.addEventListener('click', () => {
       envelope.classList.remove('close');
@@ -318,23 +317,26 @@
       if (!bgMusic.paused) {
         bgMusic.pause();
       }
+      lipbiteBtn.disabled = true;
+      lipbiteBtn.classList.add('dark');
+      lipbiteDisabled = true;
     });
 
-    videoModalClose.addEventListener('click', () => {
+    function closeVideoModal() {
       popupVideoPlayer.pause();
       videoModal.style.display = 'none';
       if (envelope.classList.contains('open')) {
         bgMusic.play().catch(() => {});
       }
-    });
+      lipbiteBtn.disabled = false;
+      lipbiteBtn.classList.remove('dark');
+      lipbiteDisabled = false;
+    }
 
+    videoModalClose.addEventListener('click', closeVideoModal);
     videoModal.addEventListener('click', (e) => {
       if (e.target === videoModal) {
-        popupVideoPlayer.pause();
-        videoModal.style.display = 'none';
-        if (envelope.classList.contains('open')) {
-          bgMusic.play().catch(() => {});
-        }
+        closeVideoModal();
       }
     });
   </script>
