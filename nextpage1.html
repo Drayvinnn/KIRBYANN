@@ -20,6 +20,14 @@
       flex-direction: column;
     }
 
+    .main-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3rem;
+      text-align: center;
+      color: #fb1684;
+      margin-bottom: 1.5rem;
+    }
+
     .lipbite-icon {
       position: absolute;
       top: 20px;
@@ -67,14 +75,6 @@
       margin-bottom: 2rem;
       overflow: visible;
       text-align: center;
-    }
-
-    .message-box h1 {
-      margin: 0 0 1rem 0;
-      font-size: 2.5rem;
-      font-weight: bold;
-      position: relative;
-      z-index: 2;
     }
 
     .flower-container {
@@ -147,7 +147,6 @@
 
     .click-button:hover {
       background-color: #e01375;
-      transform: none; /* animation removed here */
     }
 
     .modal {
@@ -213,19 +212,11 @@
 </head>
 <body>
   <div class="container">
-    <div class="message-box">
-      <h1>Happy Monthsary!</h1>
-      <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
-      <div class="flower-container">
-        <span class="flower">🌸</span>
-        <span class="flower">🌼</span>
-        <span class="flower">🌺</span>
-        <span class="flower">🌻</span>
-        <span class="flower">🌷</span>
-        <span class="flower">💐</span>
-      </div>
-    </div>
+    <h1 class="main-title">Happy Monthsary!</h1>
 
+      
+      <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
+   
     <div class="envlope-wrapper">
       <div id="envelope" class="close">
         <div class="front flap"></div>
@@ -297,14 +288,12 @@
     const popUpVideoBtn = document.getElementById('popUpVideoBtn');
     const popupVideoPlayer = document.getElementById('popupVideoPlayer');
 
-    // Open envelope
     openBtn.addEventListener('click', () => {
       envelope.classList.remove('close');
       envelope.classList.add('open');
       bgMusic.play().catch(() => {});
     });
 
-    // Close envelope
     resetBtn.addEventListener('click', () => {
       envelope.classList.remove('open');
       envelope.classList.add('close');
@@ -312,19 +301,16 @@
       bgMusic.currentTime = 0;
     });
 
-    // Lipbite button navigation, disabled when modal open
     lipbiteBtn.addEventListener('click', () => {
       if (!lipbiteDisabled) {
         window.location.href = 'nextpageeee.html';
       }
     });
 
-    // Click Here button navigates to pink-flowers.html
     clickHereBtn.addEventListener('click', () => {
       window.location.href = 'pink-flowers.html';
     });
 
-    // Pop up video modal open
     popUpVideoBtn.addEventListener('click', () => {
       videoModal.style.display = 'flex';
       popupVideoPlayer.currentTime = 0;
@@ -334,7 +320,6 @@
       }
     });
 
-    // Close video modal
     videoModalClose.addEventListener('click', () => {
       popupVideoPlayer.pause();
       videoModal.style.display = 'none';
@@ -352,10 +337,6 @@
         }
       }
     });
-
-    // Modal zoom image functionality is not included here,
-    // add if you want image grid click to open modal
-
   </script>
 </body>
 </html>
