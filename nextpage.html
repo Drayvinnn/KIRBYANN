@@ -98,7 +98,6 @@
     }
 
     .flower {
-      position: relative;
       font-size: 1.8rem;
       opacity: 0.8;
       animation: float 6s infinite ease-in-out;
@@ -120,8 +119,8 @@
 
     .photo-grid {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 15px;
       margin-bottom: 2rem;
     }
@@ -129,7 +128,6 @@
     .photo-grid img {
       width: 100%;
       max-width: 280px;
-      height: auto;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
       object-fit: cover;
@@ -150,14 +148,6 @@
       align-items: center;
       gap: 1rem;
       margin-bottom: 2rem;
-    }
-
-    .center-content img {
-      max-width: 100%;
-      width: 300px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      margin-bottom: 1rem;
     }
 
     .center-content button {
@@ -224,6 +214,11 @@
     @media (max-width: 600px) {
       .photo-grid {
         justify-content: center;
+        gap: 10px;
+      }
+
+      .photo-grid img {
+        max-width: 45vw;
       }
     }
   </style>
@@ -232,7 +227,6 @@
 
 <audio id="bgMusic" autoplay loop>
   <source src="tiktokio.com_H5cpeo9K98HvXaAiLWbb.mp3" type="audio/mp3" />
-  Your browser does not support the audio element.
 </audio>
 
 <div class="container">
@@ -250,10 +244,8 @@
     <button class="lipbite-icon" id="lipbiteBtn" aria-label="Go to homepage">🫦</button>
   </div>
 
+  <!-- Fixed Photo Grid -->
   <div class="photo-grid">
-    <!-- Add your image tags here -->
-    <!-- ... -->
-     <div class="photo-grid">
     <img src="3f92e7ea-43c1-43b8-9e9f-92eeb801c8e2.jpg" />
     <img src="bc9c32d5-1d3e-4aeb-b01a-6c402a443771.jpg" />
     <img src="52589b7c-0418-404c-a6ba-79f065c9fc7d.jpg" />
@@ -275,7 +267,6 @@
 
   <video id="hiddenVideo" style="display:none;" controls>
     <source src="27363ac5-64f1-4fa9-8feb-e471f992f507.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
   </video>
 </div>
 
@@ -284,7 +275,6 @@
   <img id="modalImage" src="" alt="Zoomed Image" style="display:none;" />
   <video id="modalVideo" controls style="display:none;">
     <source src="27363ac5-64f1-4fa9-8feb-e471f992f507.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
   </video>
 </div>
 
